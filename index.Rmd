@@ -1,0 +1,16 @@
+---
+title: ""
+output: 
+  html_document:
+    toc: FALSE
+---
+## The Swedish Bird Inventory (Svensk Fågeltaxering) <br> -- Exploring trends of farmland and woodland bird species --
+
+This website contains an exercise to explore the data of the Swedish Bird Inventory (Svensk Fågeltaxering). Furthermore, we explore the use of population trends derived from national survey programs. Please submit your answers to the questions including the code and the output as a Rmarkdown file or by using the "compile report" function in RStudio. In case you are not familiar with Rmarkdown you can find a very short introduction [here](https://clausrueffler.github.io/CodingWithR/Markdown.html).
+
+**Enjoy!**
+
+Claus & Bob
+
+
+

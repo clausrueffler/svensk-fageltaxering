@@ -1,0 +1,11 @@
+
+name: "Ecological Methods"
+title: "Ecological Methods"
+type: inverse
+left:
+  - text: "Exercises"
+    menu:
+      - text: "1. Svensk Fågeltaxering"
+        href: ./Bird_survey_R_exercise.html
+      - text: "2. Trends of Common Birds in Europe"
+        href: ./Trends_Europe.html
