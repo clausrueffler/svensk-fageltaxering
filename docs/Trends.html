@@ -332,10 +332,10 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="./Bird_survey_R_exercise.html">1. Svensk Fågeltaxering</a>
+      <a href="./Bird_survey.html">1. Svensk Fågeltaxering</a>
     </li>
     <li>
-      <a href="./Trends_Europe.html">2. Trends of Common Birds in Europe</a>
+      <a href="./Trends.html">2. Trends of Common Birds in Europe</a>
     </li>
   </ul>
 </li>
@@ -465,7 +465,7 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb6-18" data-line-number="18"><span class="kw">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="dt">legend=</span><span class="kw">c</span>(<span class="st">&quot;Farmland&quot;</span>,<span class="st">&quot;Woodland&quot;</span>), </a>
 <a class="sourceLine" id="cb6-19" data-line-number="19">       <span class="dt">pch=</span><span class="dv">22</span>, <span class="dt">pt.bg=</span><span class="kw">c</span>(<span class="st">&quot;darkorange3&quot;</span>, <span class="st">&quot;forestgreen&quot;</span>),</a>
 <a class="sourceLine" id="cb6-20" data-line-number="20">       <span class="dt">bty=</span><span class="st">&quot;n&quot;</span>, <span class="dt">pt.cex=</span><span class="dv">2</span>)</a></code></pre></div>
-<p><img src="Bird_survey_R_exercise_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="Trends_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p></p>
 <p>Next we’ll plot the change in counts through time for each species. To do so, we will use a programming tool called a <code>for loop</code>. <code>For loops</code> are iterative operations that loop over a program by using an index. It is probably easiest to digest with a simple example.</p>
 <p>In the code below, the first line starts the <code>for loop</code> and says to use the index “year” for values 2010 through 2015. Everything inside the curly brackets <code>{ }</code> will be executed as the index, “year”, iterates through the specified range of values. In this example, we ask R to print a phrase about which year it is. A pause of 0.5 seconds is included so that you can watch the iteration happening.</p>
@@ -497,7 +497,7 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co"># Last, add a title at the top of the panel with the name of the species</span></a>
 <a class="sourceLine" id="cb8-22" data-line-number="22">  <span class="kw">mtext</span>(<span class="kw">unique</span>(birds<span class="op">$</span>species)[i], <span class="dv">3</span>, <span class="dv">0</span>, <span class="dt">cex=</span><span class="fl">0.5</span>, <span class="dt">font=</span><span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb8-23" data-line-number="23">}</a></code></pre></div>
-<p><img src="Bird_survey_R_exercise_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="Trends_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>Ok…what’s going on? Are you surprised to see that the trends for all species appear to be increasing? Are birds really taking over Sweden?!? No, unfortunately not…</p>
 <p>The general increase in total observations per species is at least partly due to the fact that the inventory added new survey routes during the first years and they sample a different number of routes each year. This is problematic for making valid comparisons between years because we are obviously likely to count more birds when we survey more routes (<em>think back to our lecture on</em> <strong><em>rarefaction</em></strong>).</p>
 <div style="page-break-after: always;"></div>
@@ -521,7 +521,7 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb9-17" data-line-number="17">  </a>
 <a class="sourceLine" id="cb9-18" data-line-number="18">  <span class="kw">mtext</span>(<span class="kw">unique</span>(birds<span class="op">$</span>species)[i], <span class="dv">3</span>, <span class="dv">0</span>, <span class="dt">cex=</span><span class="fl">0.5</span>, <span class="dt">font=</span><span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb9-19" data-line-number="19">}</a></code></pre></div>
-<p><img src="Bird_survey_R_exercise_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="Trends_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p></p>
 </div>
 <div id="generalizing-across-species" class="section level2">
@@ -552,7 +552,7 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb10-23" data-line-number="23"><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend=</span><span class="kw">c</span>(<span class="st">&quot;Farmland&quot;</span>,<span class="st">&quot;Woodland&quot;</span>), </a>
 <a class="sourceLine" id="cb10-24" data-line-number="24">       <span class="dt">pch=</span><span class="dv">22</span>, <span class="dt">pt.bg=</span><span class="kw">c</span>(<span class="st">&quot;darkorange3&quot;</span>, <span class="st">&quot;forestgreen&quot;</span>),</a>
 <a class="sourceLine" id="cb10-25" data-line-number="25">       <span class="dt">bty=</span><span class="st">&quot;n&quot;</span>, <span class="dt">pt.cex=</span><span class="dv">2</span>)</a></code></pre></div>
-<p><img src="Bird_survey_R_exercise_files/figure-html/unnamed-chunk-9-1.png" width="480" /></p>
+<p><img src="Trends_files/figure-html/unnamed-chunk-9-1.png" width="480" /></p>
 <p></p>
 <p></p>
 </div>
