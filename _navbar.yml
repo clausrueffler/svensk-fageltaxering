@@ -6,6 +6,6 @@ left:
   - text: "Exercises"
     menu:
       - text: "1. Svensk Fågeltaxering"
-        href: ./Bird_survey_R_exercise.html
+        href: ./Bird_survey.html
       - text: "2. Trends of Common Birds in Europe"
-        href: ./Trends_Europe.html
+        href: ./Trends.html
