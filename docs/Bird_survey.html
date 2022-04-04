@@ -363,8 +363,8 @@ $(document).ready(function () {
 <h2>Introduction</h2>
 <p>This exercise is designed to familiarize you with the data from <em>The Swedish Bird Inventory (Svensk Fågeltaxering)</em>. On <a href="https://www.fageltaxering.lu.se/">this</a> website, you can read more about the dataset (field protocol, history, etc.). A secondary aim is to continue improving your skills with R.</p>
 </div>
-<div id="getting-started" class="section level1">
-<h1>Getting started</h1>
+<div id="getting-started" class="section level2">
+<h2>Getting started</h2>
 <div id="working-directory-project-folders-and-reading-data" class="section level3">
 <h3>Working directory, Project folders, and Reading data</h3>
 <ul>
@@ -379,6 +379,7 @@ $(document).ready(function () {
 <p>The dataset that you can download here is a reduced version of the full dataset, which is available <a href="https://www.gbif.org/dataset/91fa1a0d-a208-40aa-8a6e-f2c0beb9b253">from the GBIF website</a>.</p>
 <p>Move the downloaded <em>.csv</em> file into your project folder (working directory) and then read the data into R:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">birds &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;bird_data_subset.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+</div>
 </div>
 <div id="trends-of-farmland-and-woodland-bird-species" class="section level2">
 <h2>Trends of farmland and woodland bird species</h2>
@@ -622,7 +623,6 @@ for (i in 1:length(unique(birds$species))){
 <a class="sourceLine" id="cb17-10" data-line-number="10">  <span class="kw">mtext</span>(<span class="kw">unique</span>(birds<span class="op">$</span>species)[i], <span class="dv">3</span>, <span class="dv">0</span>, <span class="dt">cex=</span><span class="fl">0.5</span>, <span class="dt">font=</span><span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb17-11" data-line-number="11">}</a></code></pre></div>
 <p><span style="color: purple;"> <strong>Question 3</strong>: Let us compare our plots with those produced by Svensk Fågeltaxering. You can find the official time series plot from Svensk Fågeltaxering <a href="https://www.fageltaxering.lu.se/resultat/trender/trender-standardrutterna">here</a>. What do you conclude? </span></p>
-</div>
 </div>
 </div>
 

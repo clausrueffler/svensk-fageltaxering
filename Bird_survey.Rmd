@@ -18,7 +18,7 @@ klippy::klippy(position = c('top', 'right'))
 
 This exercise is designed to familiarize you with the data from *The Swedish Bird Inventory (Svensk Fågeltaxering)*. On [this](https://www.fageltaxering.lu.se/) website, you can read more about the dataset (field protocol, history, etc.). A secondary aim is to continue improving your skills with R.
 
-# Getting started
+## Getting started
 ### Working directory, Project folders, and Reading data
 
 * Remember that your working directory is usually the folder where your R script or R project is kept.
