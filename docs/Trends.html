@@ -11,7 +11,7 @@
 
 
 
-<title>Svensk Fågeltaxering</title>
+<title>Indices for Farmland and Forest Birds</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -335,7 +335,7 @@ $(document).ready(function () {
       <a href="./Bird_survey.html">1. Svensk Fågeltaxering</a>
     </li>
     <li>
-      <a href="./Trends.html">2. Trends of Common Birds in Europe</a>
+      <a href="./Trends.html">2. Indices for Farmland and Forest Birds</a>
     </li>
   </ul>
 </li>
@@ -359,203 +359,110 @@ $(document).ready(function () {
   addClassKlippyTo("pre.r, pre.markdown");
   addKlippy('right', 'top', 'auto', '1', 'Copy code', 'Copied!');
 </script>
-<div id="introduction" class="section level1">
-<h1>Introduction</h1>
-<p>This exercise is designed to familiarize you with data from <a href="https://www.fageltaxering.lu.se/">The Swedish Bird Inventory (<em>Svensk Fågeltaxering</em>)</a>. On this website, you can read more about the dataset (field protocol, history, etc.). A secondary aim is to continue improving your skills with R.</p>
-</div>
-<div id="getting-started" class="section level1">
-<h1>Getting started</h1>
-<div id="working-directory-project-folders-and-reading-data" class="section level2">
-<h2>Working directory, Project folders, and Reading data</h2>
-<ul>
-<li>Remember that your working directory is usually the folder where your R script or R project is kept.</li>
-<li>If you place the data for today’s exercise in the same folder as the project you created for the exercises in this class, you can simply continue working in that project and the data should be available.</li>
-<li>Otherwise refer to the “Introduction to R” exercise for more details on working directories and loading data in R.</li>
-</ul>
-</div>
-<div id="download-bird-data-for-this-exercise-and-read-into-r" class="section level2">
-<h2>Download bird data for this exercise and read into R</h2>
-<p>Download data for this exercise from <a href="https://github.com/clausrueffler/svensk-fageltaxering.git/downloads/bird_data_subset.csv">here</a>. The dataset posted to the course website is a reduced version of the full dataset, which is available <a href="https://www.gbif.org/dataset/91fa1a0d-a208-40aa-8a6e-f2c0beb9b253">from the GBIF website</a>.</p>
-<p>Move the downloaded .csv file into your project folder (working directory) and then read the data into R:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">birds &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;bird_data_subset.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-</div>
-</div>
-<div id="trends-of-farmland-and-woodland-bird-species" class="section level1">
-<h1>Trends of farmland and woodland bird species</h1>
-<div id="background" class="section level2">
-<h2>Background</h2>
-<p>Below, you can find two lists of ten common bird species associated with farmlands and woodland habitats. The dataset we are working with here has been reduced to include only these species and only a few columns with the most relevant information. <em>Click on the names to get more information in the species and to see some nice pictures!</em></p>
-<div id="farmland-birds" class="section level3">
-<h3>Farmland birds:</h3>
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Common_kestrel">Common Kestrel (<em>Falco tinnunculus</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Northern_lapwing">Northern Lapwing (<em>Vanellus vanellus</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Eurasian_skylark">Skylark (<em>Alauda arvensis</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Whinchat">Whinchat (<em>Saxicola rubetra</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Meadow_pipit">Meadow pipit (<em>Anthus pratensis</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Western_yellow_wagtail">Yellow wagtail (<em>Motacilla flava</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Yellowhammer">Yellowhammer (<em>Emberiza citrinella</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Eurasian_tree_sparrow">Tree sparrow (<em>Passer montanus</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Common_starling">Starling (<em>Sturnus vulgaris</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Common_whitethroat">Common whitethroat (<em>Sylvia communis</em>)</a></li>
-</ul>
-</div>
-<div id="woodland-birds" class="section level3">
-<h3>Woodland birds:</h3>
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Eurasian_sparrowhawk">Eurasian sparrowhawk (<em>Accipiter nisus</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Eurasian_jay">Euroasian jay (<em>Garrulus glandarius</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Great_spotted_woodpecker">Greater spotted woodpecker (<em>Dendrocopos major</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Coal_tit">Coal tit (<em>Periparus ater</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Common_redstart">Common redstart (<em>Phoenicurus phoenicurus</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Common_chiffchaff">Common chiffchaff (<em>Phylloscopus collybita</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Tree_pipit">Tree pipit (<em>Anthus trivialis</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Eurasian_siskin">Siskin (<em>Spinus spinus</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Hawfinch">Hawfinch (<em>Coccothraustes coccothraustes</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Eurasian_bullfinch">Bullfinch (<em>Pyrrhula pyrrhula</em>)</a></li>
-</ul>
-</div>
-</div>
-<div id="exploring-the-data" class="section level2">
-<h2>Exploring the data</h2>
-<p>Let’s start by looking some quick summaries of the dataset in order to get a feel for its content and structure.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">head</span>(birds, <span class="dv">3</span> )</a></code></pre></div>
-<pre><code>##   locationID year         species individualCount decimalLongitude
-## 1          1 1997 Alauda arvensis               2           13.229
-## 2          1 1999 Alauda arvensis               1           13.229
-## 3          1 2007 Alauda arvensis               3           13.229
-##   decimalLatitude habitat
-## 1          55.565   Farms
-## 2          55.565   Farms
-## 3          55.565   Farms</code></pre>
-<p>In this dataset, each row (or, each <em>observation</em>) represents the count of a species in a given year, in a given survey route. The first row, for example, says that there were 2 individuals of <em>Alauda arvensis</em> observed in route number 1 during the year 1997. Here’s a description of the columns:</p>
-<ul>
-<li><em>locationID</em> gives the route number</li>
-<li><em>year</em> gives the year of the observation</li>
-<li><em>species</em> gives the species observed</li>
-<li><em>individualCount</em> gives the number of individuals observed</li>
-<li><em>decimalLongitude</em> and <em>decimalLatitude</em> give the geographic coordinates for each route</li>
-<li><em>habitat</em> gives the main habitat association for the species (i.e., woodland or farmland)</li>
-</ul>
-<p>We might be interested to first get an aggregated summary of the data. For instance, let us look at the total abundance of the different species for all routes and for all years. To do this, we will first create a <code>data.frame</code> to hold information at the species-level.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">spdata &lt;-<span class="st"> </span><span class="kw">unique</span>(birds[,<span class="kw">c</span>(<span class="st">&quot;species&quot;</span>, <span class="st">&quot;habitat&quot;</span>)])</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">spdata</a></code></pre></div>
-<p>Now we can use the <code>tapply</code> function to sum the counts of each species.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Sum counts for each species (over all years)</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">total_counts &lt;-<span class="st"> </span><span class="kw">tapply</span>(birds<span class="op">$</span>individualCount, birds<span class="op">$</span>species, sum)</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">total_counts</a></code></pre></div>
-<p><strong><em>Warning!</em></strong> Notice the <code>total_counts</code> vector is in alphabetical order (this is the default behavior for <code>tapply</code> output). But the <code>spdata</code> data.frame is sorted by habitat affiliation. This will lead to incorrect results if we simply join the <code>total_counts</code> vector to the <code>spdata</code> data.frame.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># We can use the `match` function to line things up correctly</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">spdata<span class="op">$</span>total_count &lt;-<span class="st"> </span>total_counts[<span class="kw">match</span>(spdata<span class="op">$</span>species, <span class="kw">names</span>(total_counts))]</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co"># Make a vector of colors for plotting</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">spdata<span class="op">$</span>col &lt;-<span class="st"> </span><span class="kw">ifelse</span>(spdata<span class="op">$</span>habitat <span class="op">%in%</span><span class="st"> &quot;Farms&quot;</span>, <span class="st">&quot;darkorange3&quot;</span>, <span class="st">&quot;forestgreen&quot;</span>)</a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co"># Set figure margins for plotting</span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">13</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb6-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co"># Create a barplot of total counts per species</span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="kw">barplot</span>(spdata<span class="op">$</span>total_count<span class="op">/</span><span class="dv">1000</span>, </a>
-<a class="sourceLine" id="cb6-12" data-line-number="12">        <span class="dt">names.arg=</span>spdata<span class="op">$</span>species,</a>
-<a class="sourceLine" id="cb6-13" data-line-number="13">        <span class="dt">las=</span><span class="dv">2</span>, <span class="dt">col=</span>spdata<span class="op">$</span>col, </a>
-<a class="sourceLine" id="cb6-14" data-line-number="14">        <span class="dt">ylab=</span><span class="st">&quot;Total observations (x 1000)&quot;</span>,</a>
-<a class="sourceLine" id="cb6-15" data-line-number="15">        <span class="dt">cex.names=</span><span class="fl">0.5</span>)</a>
-<a class="sourceLine" id="cb6-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co"># Add a legend to the plot</span></a>
-<a class="sourceLine" id="cb6-18" data-line-number="18"><span class="kw">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="dt">legend=</span><span class="kw">c</span>(<span class="st">&quot;Farmland&quot;</span>,<span class="st">&quot;Woodland&quot;</span>), </a>
-<a class="sourceLine" id="cb6-19" data-line-number="19">       <span class="dt">pch=</span><span class="dv">22</span>, <span class="dt">pt.bg=</span><span class="kw">c</span>(<span class="st">&quot;darkorange3&quot;</span>, <span class="st">&quot;forestgreen&quot;</span>),</a>
-<a class="sourceLine" id="cb6-20" data-line-number="20">       <span class="dt">bty=</span><span class="st">&quot;n&quot;</span>, <span class="dt">pt.cex=</span><span class="dv">2</span>)</a></code></pre></div>
-<p><img src="Trends_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<p></p>
-<p>Next we’ll plot the change in counts through time for each species. To do so, we will use a programming tool called a <code>for loop</code>. <code>For loops</code> are iterative operations that loop over a program by using an index. It is probably easiest to digest with a simple example.</p>
-<p>In the code below, the first line starts the <code>for loop</code> and says to use the index “year” for values 2010 through 2015. Everything inside the curly brackets <code>{ }</code> will be executed as the index, “year”, iterates through the specified range of values. In this example, we ask R to print a phrase about which year it is. A pause of 0.5 seconds is included so that you can watch the iteration happening.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="cf">for</span> (year <span class="cf">in</span> <span class="dv">2010</span><span class="op">:</span><span class="dv">2015</span>){</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">  <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&quot;The year is&quot;</span>, year))</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">  <span class="kw">Sys.sleep</span>(<span class="fl">0.5</span>)</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">  }</a></code></pre></div>
-<p>That was a trivial example but hopefully you get the general idea. Let’s try using a more complex <code>for loop</code> to plot the temporal trends for each bird species in our dataset.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># First set the layout and margins of the figure</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">par</span>(<span class="dt">mfcol=</span><span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">4</span>), <span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="fl">1.5</span>,<span class="dv">1</span>), <span class="dt">oma=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">0</span>,<span class="dv">4</span>))</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co"># Now we will use a `for loop` to cycle through each species.</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co"># The first line says to use the index &quot;i&quot; for 1 through the </span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co"># total number of bird species (20 in our case).</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(<span class="kw">unique</span>(birds<span class="op">$</span>species))){</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co"># Next we subset the data corresponding to the i-th species</span></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10">  focal_data &lt;-<span class="st"> </span>birds[birds<span class="op">$</span>species <span class="op">%in%</span><span class="st"> </span><span class="kw">unique</span>(birds<span class="op">$</span>species)[i],]</a>
-<a class="sourceLine" id="cb8-11" data-line-number="11">  </a>
-<a class="sourceLine" id="cb8-12" data-line-number="12"><span class="co"># Next we compute the counts per year for the i-th species</span></a>
-<a class="sourceLine" id="cb8-13" data-line-number="13">  trend &lt;-<span class="st"> </span><span class="kw">tapply</span>(focal_data<span class="op">$</span>individualCount, focal_data<span class="op">$</span>year, sum)  </a>
-<a class="sourceLine" id="cb8-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co"># Now we plot the trend through time for the i-th species</span></a>
-<a class="sourceLine" id="cb8-16" data-line-number="16">  <span class="kw">plot</span>(<span class="kw">names</span>(trend), trend,</a>
-<a class="sourceLine" id="cb8-17" data-line-number="17">       <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Total Obs.&quot;</span>, <span class="dt">xlab=</span><span class="ot">NA</span>,</a>
-<a class="sourceLine" id="cb8-18" data-line-number="18">       <span class="dt">col=</span><span class="kw">ifelse</span>(<span class="st">&quot;Farms&quot;</span> <span class="op">%in%</span><span class="st"> </span>focal_data<span class="op">$</span>habitat, <span class="st">&quot;darkorange3&quot;</span>, <span class="st">&quot;forestgreen&quot;</span>), </a>
-<a class="sourceLine" id="cb8-19" data-line-number="19">       <span class="dt">lwd=</span><span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb8-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co"># Last, add a title at the top of the panel with the name of the species</span></a>
-<a class="sourceLine" id="cb8-22" data-line-number="22">  <span class="kw">mtext</span>(<span class="kw">unique</span>(birds<span class="op">$</span>species)[i], <span class="dv">3</span>, <span class="dv">0</span>, <span class="dt">cex=</span><span class="fl">0.5</span>, <span class="dt">font=</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb8-23" data-line-number="23">}</a></code></pre></div>
-<p><img src="Trends_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<p>Ok…what’s going on? Are you surprised to see that the trends for all species appear to be increasing? Are birds really taking over Sweden?!? No, unfortunately not…</p>
-<p>The general increase in total observations per species is at least partly due to the fact that the inventory added new survey routes during the first years and they sample a different number of routes each year. This is problematic for making valid comparisons between years because we are obviously likely to count more birds when we survey more routes (<em>think back to our lecture on</em> <strong><em>rarefaction</em></strong>).</p>
-<div style="page-break-after: always;"></div>
-<p>Now let’s try and correct for the different number of routes sampled per year by computing the number of counts per species per year <em>per survey route</em>.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># Compute the number of routes recorded for each year</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">nroutes &lt;-<span class="st"> </span><span class="kw">colSums</span>(<span class="kw">table</span>(birds<span class="op">$</span>locationID, birds<span class="op">$</span>year) <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co"># Let&#39;s redo the figure by dividing the number of observations </span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co"># per species per year by the number of routes surveyed each year</span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="kw">par</span>(<span class="dt">mfcol=</span><span class="kw">c</span>(<span class="dv">5</span>,<span class="dv">4</span>), <span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="fl">1.5</span>,<span class="dv">1</span>), <span class="dt">oma=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">0</span>,<span class="dv">4</span>))</a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(<span class="kw">unique</span>(birds<span class="op">$</span>species))){</a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">  </a>
-<a class="sourceLine" id="cb9-10" data-line-number="10">  focal_data &lt;-<span class="st"> </span>birds[birds<span class="op">$</span>species <span class="op">%in%</span><span class="st"> </span><span class="kw">unique</span>(birds<span class="op">$</span>species)[i],]</a>
-<a class="sourceLine" id="cb9-11" data-line-number="11">    </a>
-<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co"># Plot a panel for each species (note that we now divide by &#39;nroutes&#39;)</span></a>
-<a class="sourceLine" id="cb9-13" data-line-number="13">  <span class="kw">plot</span>(<span class="kw">sort</span>(<span class="kw">unique</span>(focal_data<span class="op">$</span>year)),</a>
-<a class="sourceLine" id="cb9-14" data-line-number="14">       <span class="kw">tapply</span>(focal_data<span class="op">$</span>individualCount, focal_data<span class="op">$</span>year, sum)<span class="op">/</span>nroutes, </a>
-<a class="sourceLine" id="cb9-15" data-line-number="15">       <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Obs. per route&quot;</span>, <span class="dt">xlab=</span><span class="ot">NA</span>, <span class="dt">lwd=</span><span class="dv">3</span>,</a>
-<a class="sourceLine" id="cb9-16" data-line-number="16">       <span class="dt">col=</span><span class="kw">ifelse</span>(<span class="st">&quot;Farms&quot;</span> <span class="op">%in%</span><span class="st"> </span>focal_data<span class="op">$</span>habitat, <span class="st">&quot;darkorange3&quot;</span>, <span class="st">&quot;forestgreen&quot;</span>))</a>
-<a class="sourceLine" id="cb9-17" data-line-number="17">  </a>
-<a class="sourceLine" id="cb9-18" data-line-number="18">  <span class="kw">mtext</span>(<span class="kw">unique</span>(birds<span class="op">$</span>species)[i], <span class="dv">3</span>, <span class="dv">0</span>, <span class="dt">cex=</span><span class="fl">0.5</span>, <span class="dt">font=</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb9-19" data-line-number="19">}</a></code></pre></div>
-<p><img src="Trends_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-<p></p>
-</div>
-<div id="generalizing-across-species" class="section level2">
-<h2>Generalizing across species</h2>
-<p>Now we’ve investigated species-specific trends but we may be interested to know if there are general trends for the two habitat groups. There are, as always, several ways of doing this but we will try one.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># First split the dataset into separate woodland and farmland species datasets</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">farmland_birds &lt;-<span class="st"> </span>birds[birds<span class="op">$</span>habitat <span class="op">==</span><span class="st"> &quot;Farms&quot;</span>,]</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">woodland_birds &lt;-<span class="st"> </span>birds[birds<span class="op">$</span>habitat <span class="op">==</span><span class="st"> &quot;Woods&quot;</span>,]</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co"># Next count the total observations per year for each group</span></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">farmland_birds_counts &lt;-<span class="st"> </span><span class="kw">tapply</span>(farmland_birds<span class="op">$</span>individualCount, farmland_birds<span class="op">$</span>year, sum)</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">woodland_birds_counts &lt;-<span class="st"> </span><span class="kw">tapply</span>(woodland_birds<span class="op">$</span>individualCount, woodland_birds<span class="op">$</span>year, sum)</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co"># Don&#39;t forget to correct for number of routes sampled!</span></a>
-<a class="sourceLine" id="cb10-10" data-line-number="10">farmland_birds_counts &lt;-<span class="st"> </span>farmland_birds_counts<span class="op">/</span>nroutes</a>
-<a class="sourceLine" id="cb10-11" data-line-number="11">woodland_birds_counts &lt;-<span class="st"> </span>woodland_birds_counts<span class="op">/</span>nroutes</a>
-<a class="sourceLine" id="cb10-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb10-13" data-line-number="13"><span class="co"># Plot the results</span></a>
-<a class="sourceLine" id="cb10-14" data-line-number="14"><span class="kw">plot</span>(<span class="kw">names</span>(farmland_birds_counts), </a>
-<a class="sourceLine" id="cb10-15" data-line-number="15">     farmland_birds_counts, </a>
-<a class="sourceLine" id="cb10-16" data-line-number="16">     <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">col=</span><span class="st">&quot;darkorange3&quot;</span>, <span class="dt">lwd=</span><span class="dv">5</span>,</a>
-<a class="sourceLine" id="cb10-17" data-line-number="17">     <span class="dt">xlab=</span><span class="ot">NA</span>, <span class="dt">ylab=</span><span class="st">&quot;Obs./route&quot;</span>)</a>
-<a class="sourceLine" id="cb10-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb10-19" data-line-number="19"><span class="kw">lines</span>(<span class="kw">names</span>(woodland_birds_counts), </a>
-<a class="sourceLine" id="cb10-20" data-line-number="20">     woodland_birds_counts, </a>
-<a class="sourceLine" id="cb10-21" data-line-number="21">     <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">col=</span><span class="st">&quot;forestgreen&quot;</span>, <span class="dt">lwd=</span><span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb10-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb10-23" data-line-number="23"><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend=</span><span class="kw">c</span>(<span class="st">&quot;Farmland&quot;</span>,<span class="st">&quot;Woodland&quot;</span>), </a>
-<a class="sourceLine" id="cb10-24" data-line-number="24">       <span class="dt">pch=</span><span class="dv">22</span>, <span class="dt">pt.bg=</span><span class="kw">c</span>(<span class="st">&quot;darkorange3&quot;</span>, <span class="st">&quot;forestgreen&quot;</span>),</a>
-<a class="sourceLine" id="cb10-25" data-line-number="25">       <span class="dt">bty=</span><span class="st">&quot;n&quot;</span>, <span class="dt">pt.cex=</span><span class="dv">2</span>)</a></code></pre></div>
-<p><img src="Trends_files/figure-html/unnamed-chunk-9-1.png" width="480" /></p>
-<p></p>
-<p></p>
-</div>
+<div id="indices-for-farmland-and-forest-birds" class="section level2">
+<h2>Indices for Farmland and Forest Birds</h2>
+<p>All countries in the European Union have to report population trends for their common farmland and forst birds. These data are collect by the <em>European Bird Census Council</em> and you can find them <a href="https://pecbms.info/trends-and-indicators/indicators/">here</a>.</p>
+<p>In this exercise, we aim to produce such indices based on the data from the previous exercise.</p>
+<p>The task seems straightforward. We have ten common farmland and ten common forst birds, each with their own trend. We just have to combine the trends of ten species into one common trend. An obvious way would be to simply add all the trends and then divide by the number of species. This would be the <em>arithmetic mean</em> of the species trends. Let’s do that.</p>
+<p>First, here again the code that produces the index value for each speces for each year.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Sum over all routes for each species and each year.</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">count.per.year &lt;-<span class="st"> </span><span class="kw">tapply</span>(birds<span class="op">$</span>individualCount, <span class="kw">list</span>(birds<span class="op">$</span>year, birds<span class="op">$</span>species), sum)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co"># As in the previous exercise, we have re-order the species from alphabetic back to the original order. We use the same trick, the match-function.</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">count.per.year &lt;-<span class="st"> </span>count.per.year[ , <span class="kw">c</span>(<span class="kw">match</span>(species.data<span class="op">$</span>species, <span class="kw">names</span>(total.counts)))]</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># Index for each species for each year with counts expressed relative to the count in the first year.</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">ncol</span>(count.per.year)){</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">  count.per.year[ , i] &lt;-<span class="st"> </span>(count.per.year[ , i]<span class="op">/</span>nroutes)<span class="op">/</span>(count.per.year[<span class="dv">1</span> , i]<span class="op">/</span>nroutes[<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">  index &lt;-<span class="st"> </span>count.per.year</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">}</a></code></pre></div>
+<p>Next, we plot the time series of the arithmetic mean of the indices for farmland and forest birds.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Compute the arithmetic mean by summing over all columns with farmland and forest birds, respectivley, and then dividing by the number of species.</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">farmland.arith &lt;-<span class="st"> </span><span class="kw">rowSums</span>(count.per.year[ , <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>])<span class="op">/</span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">forest.arith &lt;-<span class="st"> </span><span class="kw">rowSums</span>(count.per.year[ , <span class="dv">11</span><span class="op">:</span><span class="dv">20</span>])<span class="op">/</span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co"># Time series plots.</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="kw">plot</span>(<span class="dv">1996</span><span class="op">:</span><span class="dv">2018</span>, farmland.arith,</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">       <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">0.8</span>, <span class="kw">max</span>(farmland.arith) <span class="op">+</span><span class="st"> </span><span class="fl">0.1</span>), <span class="dt">yaxs=</span><span class="st">&quot;i&quot;</span>,</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">       <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;arithmetic mean index&quot;</span>, <span class="dt">xlab=</span><span class="ot">NA</span>,</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">       <span class="dt">col=</span> <span class="st">&quot;darkorange3&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw">lines</span>(<span class="dv">1996</span><span class="op">:</span><span class="dv">2018</span>, forest.arith,</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">       <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;arithmetic mean index&quot;</span>, <span class="dt">xlab=</span><span class="ot">NA</span>,</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">       <span class="dt">col=</span> <span class="st">&quot;forestgreen&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="kw">legend</span>(<span class="st">&quot;top&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Farmland&quot;</span>,<span class="st">&quot;Forest&quot;</span>), <span class="dt">col=</span> <span class="kw">c</span>(<span class="st">&quot;darkorange3&quot;</span>, <span class="st">&quot;forestgreen&quot;</span>), <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">3</span>) </a></code></pre></div>
+<p><img src="Trends_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Is it a good idea to compute arithmetic means for a multi-species index? Let us do a litte thought experiment. Consider two species. The population of the first one doubles from one year to the next, that is, it has an index of 2 in the second year. The population of the second one halfs, it has an index of 0.5 in the second year. The arithmetic mean equals <span class="math inline">\((2 + 0.5)/2 = 1.25\)</span>, suggesting a positve trend on average. It should be clear that this is misleading: the effects of one population doubling and the one halfing should cancel out each other!</p>
+<p>To achieve this, we have to compute the <em>geometric mean</em> rather than the arithmetic mean. The geometric mean for our example equals <span class="math inline">\(\sqrt{2*0.5} = 1\)</span>, as desired. Please read the short section on indicators in the course book by Sutherland (2006, pages 80 - 83) for a slighlty longer discussion of this issue. You can download the relevant pages <a href="https://clausrueffler.github.io/svensk-fageltaxering/downloads/Sutherland06Indicators.pdf">here</a>.</p>
+<p>Following Box 2.19 in Sutherland (2006)it is easy to compute the geometric mean index.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># Computing the geometric mean for farmland and forest birds.</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">farmland.geo &lt;-<span class="st"> </span><span class="kw">exp</span>(<span class="kw">rowMeans</span>(<span class="kw">log</span>(index[ , <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>])))</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">forest.geo &lt;-<span class="st"> </span><span class="kw">exp</span>(<span class="kw">rowMeans</span>(<span class="kw">log</span>(index[ , <span class="dv">11</span><span class="op">:</span><span class="dv">20</span>])))</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="kw">plot</span>(<span class="dv">1996</span><span class="op">:</span><span class="dv">2018</span>, farmland.geo,</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="fl">0.8</span>, <span class="kw">max</span>(farmland.geo) <span class="op">+</span><span class="st"> </span><span class="fl">0.1</span>), <span class="dt">yaxs=</span><span class="st">&quot;i&quot;</span>, </a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">     <span class="dt">ylab=</span><span class="st">&quot;geometric mean index&quot;</span>, <span class="dt">xlab=</span><span class="ot">NA</span>,</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">     <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">col=</span> <span class="st">&quot;darkorange3&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="kw">lines</span>(<span class="dv">1996</span><span class="op">:</span><span class="dv">2018</span>, forest.geo,</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">       <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">col=</span> <span class="st">&quot;forestgreen&quot;</span>, <span class="dt">lwd=</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="kw">legend</span>(<span class="st">&quot;top&quot;</span>, <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Farmland&quot;</span>,<span class="st">&quot;Forest&quot;</span>), <span class="dt">col=</span> <span class="kw">c</span>(<span class="st">&quot;darkorange3&quot;</span>, <span class="st">&quot;forestgreen&quot;</span>), <span class="dt">lty =</span> <span class="dv">1</span>, <span class="dt">lwd =</span> <span class="dv">3</span>) </a></code></pre></div>
+<p><img src="Trends_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><span style="color: purple;"> <strong>Question 4</strong>: What are two conclusions you can make from this figure? For farmland birds compare your result with the offical Swedish data that you can find <a href="https://www.sverigesmiljomal.se/miljomalen/ett-rikt-odlingslandskap/faglar-och-fjarilar/">here</a>. If your results, differ from those on this website, what could be the reason? </span></p>
+<!---
+<span style="color: purple;">
+**Bonus Question**: For the plot above, we pooled the raw observations among species in each group. This leads to a "weighted average" whereby more abundant species influence the pooled trend more than rare species.  In other words, the lines in this figure are driven by the most abundant species.  How might we compute counts per year for each habitat group with more equal weighting of common and rare species? (You don't need to write code for this; just try and describe how it might be done.)
+</span>
+--->
+<!---
+Bob's old code.
+
+```r
+nroutes <- colSums(table(birds$locationID, birds$year) > 0)
+
+par(mfcol=c(5,4), mar=c(2,4,1.5,1), oma=c(0,4,0,4))
+
+for (i in 1:ncol(count.per.year)){
+  plot(1996:2018, (count.per.year[ , i]/nroutes)/(count.per.year[1 , i]/nroutes[1]),
+       # for better comparision with the plots from Svensk Fågeltaxering we change the y-axis so that starts at zero and is exactly as long as needed 
+       ylim = c(0, max((count.per.year[ , i]/nroutes)/(count.per.year[1 , i]/nroutes[1])+0.3)), yaxs="i",
+       type="l", ylab="Total Obs.", xlab=NA,
+       col=ifelse(i %in% 1:10, "darkorange3", "forestgreen"), 
+       lwd=3)
+  mtext(unique(birds$species)[i], 3, 0, cex=0.5, font=2)
+}
+```
+
+<img src="Trends_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+
+
+```r
+# First split the dataset into separate woodland and farmland species datasets
+farmland_birds <- birds[birds$habitat == "Farms",]
+woodland_birds <- birds[birds$habitat == "Woods",]
+
+# Next count the total observations per year for each group
+farmland_birds_counts <- tapply(farmland_birds$individualCount, farmland_birds$year, sum)
+woodland_birds_counts <- tapply(woodland_birds$individualCount, woodland_birds$year, sum)
+
+# Do not forget to correct for number of routes sampled!
+farmland_birds_counts <- farmland_birds_counts/nroutes
+woodland_birds_counts <- woodland_birds_counts/nroutes
+
+# Plot the results
+plot(names(farmland_birds_counts), 
+     farmland_birds_counts, 
+     type="l", col="darkorange3", lwd=5,
+     xlab=NA, ylab="Obs./route")
+
+lines(names(woodland_birds_counts), 
+     woodland_birds_counts, 
+     type="l", col="forestgreen", lwd=5)
+
+legend("topright", legend=c("Farmland","Woodland"), 
+       pch=22, pt.bg=c("darkorange3", "forestgreen"),
+       bty="n", pt.cex=2)
+```
+
+<img src="Trends_files/figure-html/unnamed-chunk-5-1.png" width="480" />
+--->
 </div>
 
 

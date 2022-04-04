@@ -7,5 +7,5 @@ left:
     menu:
       - text: "1. Svensk Fågeltaxering"
         href: ./Bird_survey.html
-      - text: "2. Trends of Common Birds in Europe"
+      - text: "2. Indices for Farmland and Forest Birds"
         href: ./Trends.html

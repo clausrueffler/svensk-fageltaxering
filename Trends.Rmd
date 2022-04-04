@@ -1,5 +1,5 @@
 ---
-pagetitle: 'Svensk Fågeltaxering'
+pagetitle: 'Indices for Farmland and Forest Birds'
 output: 
   html_document:
     toc: FALSE
@@ -14,188 +14,97 @@ klippy::klippy(position = c('top', 'right'))
 ```
 
 
-# Introduction
+## Indices for Farmland and Forest Birds
 
-This exercise is designed to familiarize you with data from [The Swedish Bird Inventory (*Svensk Fågeltaxering*)](https://www.fageltaxering.lu.se/). On this website, you can read more about the dataset (field protocol, history, etc.). A secondary aim is to continue improving your skills with R.
+All countries in the European Union have to report population trends for their common farmland and forst birds. These data are collect by the *European Bird Census Council* and you can find them [here](https://pecbms.info/trends-and-indicators/indicators/).
 
-# Getting started
-## Working directory, Project folders, and Reading data
+In this exercise, we aim to produce such indices based on the data from the previous exercise. 
 
-* Remember that your working directory is usually the folder where your R script or R project is kept.
-* If you place the data for today's exercise in the same folder as the project you created for the exercises in this class, you can simply continue working in that project and the data should be available.
-* Otherwise refer to the "Introduction to R" exercise for more details on working directories and loading data in R.
+The task seems straightforward. We have ten common farmland and ten common forst birds, each with their own trend. We just have to combine the trends of ten species into one common trend. An obvious way would be to simply add all the trends and then divide by the number of species. This would be the *arithmetic mean* of the species trends. Let's do that.
 
-## Download bird data for this exercise and read into R
+First, here again the code that produces the index value for each speces for each year.
 
-Download data for this exercise from [here](https://github.com/clausrueffler/svensk-fageltaxering.git/downloads/bird_data_subset.csv).
-The dataset posted to the course website is a reduced version of the full dataset, which is available [from the GBIF website](https://www.gbif.org/dataset/91fa1a0d-a208-40aa-8a6e-f2c0beb9b253).
+```{r}
+# Sum over all routes for each species and each year.
+count.per.year <- tapply(birds$individualCount, list(birds$year, birds$species), sum)
+# As in the previous exercise, we have re-order the species from alphabetic back to the original order. We use the same trick, the match-function.
+count.per.year <- count.per.year[ , c(match(species.data$species, names(total.counts)))]
 
-Move the downloaded .csv file into your project folder (working directory) and then read the data into R:
-```{r, echo=T, eval=T}
-birds <- read.csv("bird_data_subset.csv", stringsAsFactors = FALSE)
-```
-
-# Trends of farmland and woodland bird species
-## Background
-
-Below, you can find two lists of ten common bird species associated with farmlands and woodland habitats. The dataset we are working with here has been reduced to include only these species and only a few columns with the most relevant information. *Click on the names to get more information in the species and to see some nice pictures!*
-
-### Farmland birds:
-* [Common Kestrel (*Falco tinnunculus*)](https://en.wikipedia.org/wiki/Common_kestrel)
-* [Northern Lapwing (*Vanellus vanellus*)](https://en.wikipedia.org/wiki/Northern_lapwing)
-* [Skylark (*Alauda arvensis*)](https://en.wikipedia.org/wiki/Eurasian_skylark)
-* [Whinchat (*Saxicola rubetra*)](https://en.wikipedia.org/wiki/Whinchat)
-* [Meadow pipit (*Anthus pratensis*)](https://en.wikipedia.org/wiki/Meadow_pipit)
-* [Yellow wagtail (*Motacilla flava*)](https://en.wikipedia.org/wiki/Western_yellow_wagtail)
-* [Yellowhammer (*Emberiza citrinella*)](https://en.wikipedia.org/wiki/Yellowhammer)
-* [Tree sparrow (*Passer montanus*)](https://en.wikipedia.org/wiki/Eurasian_tree_sparrow)
-* [Starling (*Sturnus vulgaris*)](https://en.wikipedia.org/wiki/Common_starling)
-* [Common whitethroat (*Sylvia communis*)](https://en.wikipedia.org/wiki/Common_whitethroat)
-
-### Woodland birds:
-* [Eurasian sparrowhawk (*Accipiter nisus*)](https://en.wikipedia.org/wiki/Eurasian_sparrowhawk)
-* [Euroasian jay (*Garrulus glandarius*)](https://en.wikipedia.org/wiki/Eurasian_jay)
-* [Greater spotted woodpecker (*Dendrocopos major*)](https://en.wikipedia.org/wiki/Great_spotted_woodpecker)
-* [Coal tit (*Periparus ater*)](https://en.wikipedia.org/wiki/Coal_tit)
-* [Common redstart (*Phoenicurus phoenicurus*)](https://en.wikipedia.org/wiki/Common_redstart)
-* [Common chiffchaff (*Phylloscopus collybita*)](https://en.wikipedia.org/wiki/Common_chiffchaff)
-* [Tree pipit (*Anthus trivialis*)](https://en.wikipedia.org/wiki/Tree_pipit)
-* [Siskin (*Spinus spinus*)](https://en.wikipedia.org/wiki/Eurasian_siskin)
-* [Hawfinch (*Coccothraustes coccothraustes*)](https://en.wikipedia.org/wiki/Hawfinch)
-* [Bullfinch (*Pyrrhula pyrrhula*)](https://en.wikipedia.org/wiki/Eurasian_bullfinch)
-
-## Exploring the data
-
-Let's start by looking some quick summaries of the dataset in order to get a feel for its content and structure.
-
-```{r,  eval=T}
-head(birds, 3 )
-```
-
-In this dataset, each row (or, each *observation*) represents the count of a species in a given year, in a given survey route.  The first row, for example, says that there were 2 individuals of *Alauda arvensis* observed in route number 1 during the year 1997.  Here's a description of the columns:
-
-* *locationID* gives the route number
-* *year* gives the year of the observation
-* *species* gives the species observed
-* *individualCount* gives the number of individuals observed
-* *decimalLongitude* and *decimalLatitude* give the geographic coordinates for each route
-* *habitat* gives the main habitat association for the species (i.e., woodland or farmland)
-
-We might be interested to first get an aggregated summary of the data. For instance, let us look at the total abundance of the different species for all routes and for all years.  To do this, we will first create a `data.frame` to hold information at the species-level.
-
-```{r,  eval=T, results='hide'}
-spdata <- unique(birds[,c("species", "habitat")])
-spdata
-```
-
-Now we can use the `tapply` function to sum the counts of each species.
-```{r,  eval=T, results='hide'}
-# Sum counts for each species (over all years)
-total_counts <- tapply(birds$individualCount, birds$species, sum)
-total_counts
-```
-
-***Warning!***
-Notice the `total_counts` vector is in alphabetical order (this is the default behavior for `tapply` output). But the `spdata` data.frame is sorted by habitat affiliation.  This will lead to incorrect results if we simply join the `total_counts` vector to the `spdata` data.frame.
-```{r,  eval=T}
-# We can use the `match` function to line things up correctly
-spdata$total_count <- total_counts[match(spdata$species, names(total_counts))]
-
-# Make a vector of colors for plotting
-spdata$col <- ifelse(spdata$habitat %in% "Farms", "darkorange3", "forestgreen")
-
-# Set figure margins for plotting
-par(mar=c(13,4,1,1))
-
-# Create a barplot of total counts per species
-barplot(spdata$total_count/1000, 
-        names.arg=spdata$species,
-        las=2, col=spdata$col, 
-        ylab="Total observations (x 1000)",
-        cex.names=0.5)
-
-# Add a legend to the plot
-legend("topleft", legend=c("Farmland","Woodland"), 
-       pch=22, pt.bg=c("darkorange3", "forestgreen"),
-       bty="n", pt.cex=2)
-```
-
-\textcolor{purple}{\textbf{Question 1: Please write down two conclusions you can make from this figure.}}
-
-Next we'll plot the change in counts through time for each species.  To do so, we will use a programming tool called a `for loop`. `For loops` are iterative operations that loop over a program by using an index. It is probably easiest to digest with a simple example.
-
-In the code below, the first line starts the `for loop` and says to use the index "year" for values 2010 through 2015.  Everything inside the curly brackets `{ }` will be executed as the index, "year", iterates through the specified range of values.  In this example, we ask R to print a phrase about which year it is.  A pause of 0.5 seconds is included so that you can watch the iteration happening.
-
-```{r,  eval=F}
-for (year in 2010:2015){
-  print(paste("The year is", year))
-  Sys.sleep(0.5)
-  }
-```
-
-That was a trivial example but hopefully you get the general idea.  Let's try using a more complex `for loop`  to plot the temporal trends for each bird species in our dataset.
-
-```{r,  eval=T}
-# First set the layout and margins of the figure
-par(mfcol=c(5,4), mar=c(2,4,1.5,1), oma=c(0,4,0,4))
-
-# Now we will use a `for loop` to cycle through each species.
-# The first line says to use the index "i" for 1 through the 
-# total number of bird species (20 in our case).
-for (i in 1:length(unique(birds$species))){
-
-# Next we subset the data corresponding to the i-th species
-  focal_data <- birds[birds$species %in% unique(birds$species)[i],]
-  
-# Next we compute the counts per year for the i-th species
-  trend <- tapply(focal_data$individualCount, focal_data$year, sum)  
-
-# Now we plot the trend through time for the i-th species
-  plot(names(trend), trend,
-       type="l", ylab="Total Obs.", xlab=NA,
-       col=ifelse("Farms" %in% focal_data$habitat, "darkorange3", "forestgreen"), 
-       lwd=3)
-
-# Last, add a title at the top of the panel with the name of the species
-  mtext(unique(birds$species)[i], 3, 0, cex=0.5, font=2)
+# Index for each species for each year with counts expressed relative to the count in the first year.
+for (i in 1:ncol(count.per.year)){
+  count.per.year[ , i] <- (count.per.year[ , i]/nroutes)/(count.per.year[1 , i]/nroutes[1])
+  index <- count.per.year
 }
-
 ```
 
-Ok...what's going on? Are you surprised to see that the trends for all species appear to be increasing?  Are birds really taking over Sweden?!?  No, unfortunately not...
-
-The general increase in total observations per species is at least partly due to the fact that the inventory added new survey routes during the first years and they sample a different number of routes each year.  This is problematic for making valid comparisons between years because we are obviously likely to count more birds when we survey more routes (*think back to our lecture on* ***rarefaction***).
-
-\newpage
-Now let's try and correct for the different number of routes sampled per year by computing the number of counts per species per year *per survey route*.
+Next, we plot the time series of the arithmetic mean of the indices for farmland and forest birds.
 
 ```{r, eval=T}
-# Compute the number of routes recorded for each year
+# Compute the arithmetic mean by summing over all columns with farmland and forest birds, respectivley, and then dividing by the number of species.
+farmland.arith <- rowSums(count.per.year[ , 1:10])/10
+forest.arith <- rowSums(count.per.year[ , 11:20])/10
+
+# Time series plots.
+plot(1996:2018, farmland.arith,
+       ylim = c(0.8, max(farmland.arith) + 0.1), yaxs="i",
+       type="l", ylab="arithmetic mean index", xlab=NA,
+       col= "darkorange3", lwd=3)
+lines(1996:2018, forest.arith,
+       type="l", ylab="arithmetic mean index", xlab=NA,
+       col= "forestgreen", lwd=3)
+legend("top", legend = c("Farmland","Forest"), col= c("darkorange3", "forestgreen"), lty = 1, lwd = 3) 
+```
+
+Is it a good idea to compute arithmetic means for a multi-species index? Let us do a litte thought experiment. Consider two species. The population of the first one doubles from one year to the next, that is, it has an index of 2 in the second year. The population of the second one halfs, it has an index of 0.5 in the second year. The arithmetic mean equals $(2 + 0.5)/2 = 1.25$, suggesting a positve trend on average. It should be clear that this is misleading: the effects of one population doubling and the one halfing should cancel out each other!
+
+To achieve this, we have to compute the *geometric mean* rather than the arithmetic mean. The geometric mean for our example equals $\sqrt{2*0.5} = 1$, as desired. Please read the short section on indicators in the course book by Sutherland (2006, pages 80 - 83) for a slighlty longer discussion of this issue. You can download the relevant pages [here](https://clausrueffler.github.io/svensk-fageltaxering/downloads/Sutherland06Indicators.pdf).
+
+Following Box 2.19 in Sutherland (2006)it is easy to compute the geometric mean index.
+
+```{r, eval=T, results = 'hide'}
+# Computing the geometric mean for farmland and forest birds.
+farmland.geo <- exp(rowMeans(log(index[ , 1:10])))
+forest.geo <- exp(rowMeans(log(index[ , 11:20])))
+
+plot(1996:2018, farmland.geo,
+     ylim = c(0.8, max(farmland.geo) + 0.1), yaxs="i", 
+     ylab="geometric mean index", xlab=NA,
+     type="l", col= "darkorange3", lwd=3)
+lines(1996:2018, forest.geo,
+       type="l", col= "forestgreen", lwd=3)
+legend("top", legend = c("Farmland","Forest"), col= c("darkorange3", "forestgreen"), lty = 1, lwd = 3) 
+```
+
+<span style="color: purple;">
+**Question 4**: What are two conclusions you can make from this figure?
+For farmland birds compare your result with the offical Swedish data that you can find [here](https://www.sverigesmiljomal.se/miljomalen/ett-rikt-odlingslandskap/faglar-och-fjarilar/). If your results, differ from those on this website, what could be the reason?
+</span>
+
+
+
+<!---
+<span style="color: purple;">
+**Bonus Question**: For the plot above, we pooled the raw observations among species in each group. This leads to a "weighted average" whereby more abundant species influence the pooled trend more than rare species.  In other words, the lines in this figure are driven by the most abundant species.  How might we compute counts per year for each habitat group with more equal weighting of common and rare species? (You don't need to write code for this; just try and describe how it might be done.)
+</span>
+--->
+
+<!---
+Bob's old code.
+```{r, eval=T}
 nroutes <- colSums(table(birds$locationID, birds$year) > 0)
 
-# Let's redo the figure by dividing the number of observations 
-# per species per year by the number of routes surveyed each year
 par(mfcol=c(5,4), mar=c(2,4,1.5,1), oma=c(0,4,0,4))
 
-for (i in 1:length(unique(birds$species))){
-  
-  focal_data <- birds[birds$species %in% unique(birds$species)[i],]
-    
-# Plot a panel for each species (note that we now divide by 'nroutes')
-  plot(sort(unique(focal_data$year)),
-       tapply(focal_data$individualCount, focal_data$year, sum)/nroutes, 
-       type="l", ylab="Obs. per route", xlab=NA, lwd=3,
-       col=ifelse("Farms" %in% focal_data$habitat, "darkorange3", "forestgreen"))
-  
+for (i in 1:ncol(count.per.year)){
+  plot(1996:2018, (count.per.year[ , i]/nroutes)/(count.per.year[1 , i]/nroutes[1]),
+       # for better comparision with the plots from Svensk Fågeltaxering we change the y-axis so that starts at zero and is exactly as long as needed 
+       ylim = c(0, max((count.per.year[ , i]/nroutes)/(count.per.year[1 , i]/nroutes[1])+0.3)), yaxs="i",
+       type="l", ylab="Total Obs.", xlab=NA,
+       col=ifelse(i %in% 1:10, "darkorange3", "forestgreen"), 
+       lwd=3)
   mtext(unique(birds$species)[i], 3, 0, cex=0.5, font=2)
 }
 ```
-
-\textcolor{purple}{\textbf{Question 2: After correcting for number of routes sampled per year, which species appears to have the most obvious increase in abundance over the survey period?  Which species appears to have the most obvious decrease in abundance over the survey period?  Can you detect a general trends among woodland and farmland species?}}
-
-## Generalizing across species
-
-Now we've investigated species-specific trends but we may be interested to know if there are general trends for the two habitat groups.  There are, as always, several ways of doing this but we will try one.
 
 ```{r, eval=T, fig.width=5, fig.height=4}
 # First split the dataset into separate woodland and farmland species datasets
@@ -206,7 +115,7 @@ woodland_birds <- birds[birds$habitat == "Woods",]
 farmland_birds_counts <- tapply(farmland_birds$individualCount, farmland_birds$year, sum)
 woodland_birds_counts <- tapply(woodland_birds$individualCount, woodland_birds$year, sum)
 
-# Don't forget to correct for number of routes sampled!
+# Do not forget to correct for number of routes sampled!
 farmland_birds_counts <- farmland_birds_counts/nroutes
 woodland_birds_counts <- woodland_birds_counts/nroutes
 
@@ -224,12 +133,5 @@ legend("topright", legend=c("Farmland","Woodland"),
        pch=22, pt.bg=c("darkorange3", "forestgreen"),
        bty="n", pt.cex=2)
 ```
-
-\textcolor{purple}{\textbf{
-Question 3: What are two conclusions you can make from this figure?
-}}
-
-\textcolor{purple}{\textbf{
-**Bonus Question:** For the plot above, we pooled the raw observations among species in each group. This leads to a "weighted average" whereby more abundant species influence the pooled trend more than rare species.  In other words, the lines in this figure are driven by the most abundant species.  How might we compute counts per year for each habitat group with more equal weighting of common and rare species? (You don't need to write code for this; just try and describe how it might be done.)}}
-
+--->
 
