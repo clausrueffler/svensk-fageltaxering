@@ -59,18 +59,18 @@ Is it a good idea to compute arithmetic means for a multi-species index? Let us 
 
 To achieve this, we have to compute the *geometric mean* rather than the arithmetic mean. The geometric mean for our example equals $\sqrt{2*0.5} = 1$, as desired. Please read the short section on indicators in the course book by Sutherland (2006, pages 80 - 83) for a slighlty longer discussion of this issue. You can download the relevant pages [here](https://clausrueffler.github.io/svensk-fageltaxering/downloads/Sutherland06Indicators.pdf).
 
-Following Box 2.19 in Sutherland (2006)it is easy to compute the geometric mean index.
+Following Box 2.19 in Sutherland (2006) it is easy to compute the geometric mean index.
 
-```{r, eval=T, results = 'hide'}
+```{r eval=F}
 # Computing the geometric mean for farmland and forest birds.
-farmland.geo <- exp(rowMeans(log(index[ , 1:10])))
-forest.geo <- exp(rowMeans(log(index[ , 11:20])))
+farmland.geom <- exp(rowMeans(log(index[ , 1:10])))
+forest.geom <- exp(rowMeans(log(index[ , 11:20])))
 
-plot(1996:2018, farmland.geo,
-     ylim = c(0.8, max(farmland.geo) + 0.1), yaxs="i", 
+plot(1996:2018, farmland.geom,
+     ylim = c(0.8, max(farmland.geom) + 0.1), yaxs="i", 
      ylab="geometric mean index", xlab=NA,
      type="l", col= "darkorange3", lwd=3)
-lines(1996:2018, forest.geo,
+lines(1996:2018, forest.geom,
        type="l", col= "forestgreen", lwd=3)
 legend("top", legend = c("Farmland","Forest"), col= c("darkorange3", "forestgreen"), lty = 1, lwd = 3) 
 ```
