@@ -37,10 +37,10 @@ Move the downloaded *.csv* file into your project folder (working directory) and
 birds <- read.csv("bird_data_subset.csv", stringsAsFactors = FALSE)
 ```
 
-## Trends of farmland and woodland bird species
+## Trends of farmland and forest bird species
 ### Background
 
-Below, you can find two lists of ten common bird species associated with farmlands and woodland habitats, respectively. The dataset we are working with here has been reduced to include only these species and only a few columns with the most relevant information. *Click on the names to get more information on the species and to see some nice pictures!*
+Below, you can find two lists of ten common bird species associated with farmlands and forest habitats, respectively. The dataset we are working with here has been reduced to include only these species and only a few columns with the most relevant information. *Click on the names to get more information on the species and to see some nice pictures!*
 
 #### Farmland birds:
 * [Common Kestrel (*Falco tinnunculus*)](https://en.wikipedia.org/wiki/Common_kestrel)
@@ -54,7 +54,7 @@ Below, you can find two lists of ten common bird species associated with farmlan
 * [Starling (*Sturnus vulgaris*)](https://en.wikipedia.org/wiki/Common_starling)
 * [Common whitethroat (*Sylvia communis*)](https://en.wikipedia.org/wiki/Common_whitethroat)
 
-#### Woodland birds:
+#### Forest birds:
 * [Eurasian sparrowhawk (*Accipiter nisus*)](https://en.wikipedia.org/wiki/Eurasian_sparrowhawk)
 * [Euroasian jay (*Garrulus glandarius*)](https://en.wikipedia.org/wiki/Eurasian_jay)
 * [Greater spotted woodpecker (*Dendrocopos major*)](https://en.wikipedia.org/wiki/Great_spotted_woodpecker)
@@ -84,7 +84,7 @@ In this dataset, each row (or, each *observation*) represents the count of a spe
 * *species* gives the species observed
 * *individualCount* gives the number of individuals observed
 * *decimalLongitude* and *decimalLatitude* give the geographic coordinates for each route (in WGS84).
-* *habitat* gives the main habitat association for the species (i.e., woodland or farmland)
+* *habitat* gives the main habitat association for the species (i.e., farmland or forest)
 
 We might be interested to first get an aggregated summary of the data. For instance, let us look for each species at the total number of observations, that is, summed over all routes and over all years.  To do this, we construct a `data.frame` to hold information at the species-level. We do this in two steps. First, we simplify the data frame `birds` so that it only contains two columns, `species` and `habitat`.
 
@@ -127,7 +127,7 @@ barplot(species.data$total.count/1000,
         cex.names=0.5)
 
 # Add a legend to the plot
-legend("topleft", legend=c("Farmland","Woodland"), 
+legend("topleft", legend=c("Farmland","Forest"), 
        pch=22, pt.bg=c("darkorange3", "forestgreen"),
        bty="n", pt.cex=2)
 ```
@@ -259,7 +259,7 @@ for (i in 1:length(unique(birds$species))){
 --->
 
 <span style="color: purple;">
-**Question 2**: After correcting for number of routes sampled per year, which species appears to have the most obvious increase in abundance over the survey period?  Which species appears to have the most obvious decrease in abundance over the survey period? Can you detect a general trend among woodland and farmland species?
+**Question 2**: After correcting for number of routes sampled per year, which species appears to have the most obvious increase in abundance over the survey period?  Which species appears to have the most obvious decrease in abundance over the survey period? Can you detect a general trend among farmland and forest species?
 </span>
 
 For times series like these it is common to report the data as an index relative to the count of the first year. Given the code that we have, it is easy to implement this change. All that we have to do is to divide the average number of individuals per route by the result for the first year. Let us have a look at the time series for the Skylark *Alauda arvensis*.

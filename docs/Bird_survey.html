@@ -381,11 +381,11 @@ $(document).ready(function () {
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">birds &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;bird_data_subset.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 </div>
 </div>
-<div id="trends-of-farmland-and-woodland-bird-species" class="section level2">
-<h2>Trends of farmland and woodland bird species</h2>
+<div id="trends-of-farmland-and-forest-bird-species" class="section level2">
+<h2>Trends of farmland and forest bird species</h2>
 <div id="background" class="section level3">
 <h3>Background</h3>
-<p>Below, you can find two lists of ten common bird species associated with farmlands and woodland habitats, respectively. The dataset we are working with here has been reduced to include only these species and only a few columns with the most relevant information. <em>Click on the names to get more information on the species and to see some nice pictures!</em></p>
+<p>Below, you can find two lists of ten common bird species associated with farmlands and forest habitats, respectively. The dataset we are working with here has been reduced to include only these species and only a few columns with the most relevant information. <em>Click on the names to get more information on the species and to see some nice pictures!</em></p>
 <div id="farmland-birds" class="section level4">
 <h4>Farmland birds:</h4>
 <ul>
@@ -401,8 +401,8 @@ $(document).ready(function () {
 <li><a href="https://en.wikipedia.org/wiki/Common_whitethroat">Common whitethroat (<em>Sylvia communis</em>)</a></li>
 </ul>
 </div>
-<div id="woodland-birds" class="section level4">
-<h4>Woodland birds:</h4>
+<div id="forest-birds" class="section level4">
+<h4>Forest birds:</h4>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Eurasian_sparrowhawk">Eurasian sparrowhawk (<em>Accipiter nisus</em>)</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Eurasian_jay">Euroasian jay (<em>Garrulus glandarius</em>)</a></li>
@@ -440,7 +440,7 @@ $(document).ready(function () {
 <li><em>species</em> gives the species observed</li>
 <li><em>individualCount</em> gives the number of individuals observed</li>
 <li><em>decimalLongitude</em> and <em>decimalLatitude</em> give the geographic coordinates for each route (in WGS84).</li>
-<li><em>habitat</em> gives the main habitat association for the species (i.e., woodland or farmland)</li>
+<li><em>habitat</em> gives the main habitat association for the species (i.e., farmland or forest)</li>
 </ul>
 <p>We might be interested to first get an aggregated summary of the data. For instance, let us look for each species at the total number of observations, that is, summed over all routes and over all years. To do this, we construct a <code>data.frame</code> to hold information at the species-level. We do this in two steps. First, we simplify the data frame <code>birds</code> so that it only contains two columns, <code>species</code> and <code>habitat</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">species.data &lt;-<span class="st"> </span><span class="kw">unique</span>(birds[ , <span class="kw">c</span>(<span class="st">&quot;species&quot;</span>, <span class="st">&quot;habitat&quot;</span>)])</a>
@@ -489,7 +489,7 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb10-12" data-line-number="12">        <span class="dt">cex.names=</span><span class="fl">0.5</span>)</a>
 <a class="sourceLine" id="cb10-13" data-line-number="13"></a>
 <a class="sourceLine" id="cb10-14" data-line-number="14"><span class="co"># Add a legend to the plot</span></a>
-<a class="sourceLine" id="cb10-15" data-line-number="15"><span class="kw">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="dt">legend=</span><span class="kw">c</span>(<span class="st">&quot;Farmland&quot;</span>,<span class="st">&quot;Woodland&quot;</span>), </a>
+<a class="sourceLine" id="cb10-15" data-line-number="15"><span class="kw">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="dt">legend=</span><span class="kw">c</span>(<span class="st">&quot;Farmland&quot;</span>,<span class="st">&quot;Forest&quot;</span>), </a>
 <a class="sourceLine" id="cb10-16" data-line-number="16">       <span class="dt">pch=</span><span class="dv">22</span>, <span class="dt">pt.bg=</span><span class="kw">c</span>(<span class="st">&quot;darkorange3&quot;</span>, <span class="st">&quot;forestgreen&quot;</span>),</a>
 <a class="sourceLine" id="cb10-17" data-line-number="17">       <span class="dt">bty=</span><span class="st">&quot;n&quot;</span>, <span class="dt">pt.cex=</span><span class="dv">2</span>)</a></code></pre></div>
 <p><img src="Bird_survey_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
@@ -604,7 +604,7 @@ for (i in 1:length(unique(birds$species))){
 
 <img src="Bird_survey_files/figure-html/unnamed-chunk-13-1.png" width="672" />
 --->
-<p><span style="color: purple;"> <strong>Question 2</strong>: After correcting for number of routes sampled per year, which species appears to have the most obvious increase in abundance over the survey period? Which species appears to have the most obvious decrease in abundance over the survey period? Can you detect a general trend among woodland and farmland species? </span></p>
+<p><span style="color: purple;"> <strong>Question 2</strong>: After correcting for number of routes sampled per year, which species appears to have the most obvious increase in abundance over the survey period? Which species appears to have the most obvious decrease in abundance over the survey period? Can you detect a general trend among farmland and forest species? </span></p>
 <p>For times series like these it is common to report the data as an index relative to the count of the first year. Given the code that we have, it is easy to implement this change. All that we have to do is to divide the average number of individuals per route by the result for the first year. Let us have a look at the time series for the Skylark <em>Alauda arvensis</em>.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co"># Time series for the average number of Skylarks per standard route for each year.</span></a>
 <a class="sourceLine" id="cb15-2" data-line-number="2">count.per.year[ , <span class="dv">1</span>]<span class="op">/</span>nroutes</a></code></pre></div>
