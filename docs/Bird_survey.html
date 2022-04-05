@@ -375,10 +375,13 @@ $(document).ready(function () {
 </div>
 <div id="download-bird-data-for-this-exercise-and-read-into-r" class="section level3">
 <h3>Download bird data for this exercise and read into R</h3>
-<p>You can download the data for this exercise <a href="https://clausrueffler.github.io/svensk-fageltaxering/downloads/bird_data_subset.csv">here</a>.</p>
+<p>You can download the data for this exercise <a href="https://clausrueffler.github.io/svensk-fageltaxering/downloads/bird_data_subset.csv">here</a>. Alternatively, you can download the data as an R-data file <a href="https://clausrueffler.github.io/svensk-fageltaxering/downloads/bird_data_subset.RDA">here</a>.</p>
 <p>The dataset that you can download here is a reduced version of the full dataset, which is available <a href="https://www.gbif.org/dataset/91fa1a0d-a208-40aa-8a6e-f2c0beb9b253">from the GBIF website</a>.</p>
 <p>Move the downloaded <em>.csv</em> file into your project folder (working directory) and then read the data into R:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">birds &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;bird_data_subset.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">birds &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;bird_data_subset.csv&quot;</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co"># or</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">birds &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="st">&quot;bird_data_subset.RDA&quot;</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="trends-of-farmland-and-forest-bird-species" class="section level2">
@@ -492,7 +495,7 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb10-15" data-line-number="15"><span class="kw">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="dt">legend=</span><span class="kw">c</span>(<span class="st">&quot;Farmland&quot;</span>,<span class="st">&quot;Forest&quot;</span>), </a>
 <a class="sourceLine" id="cb10-16" data-line-number="16">       <span class="dt">pch=</span><span class="dv">22</span>, <span class="dt">pt.bg=</span><span class="kw">c</span>(<span class="st">&quot;darkorange3&quot;</span>, <span class="st">&quot;forestgreen&quot;</span>),</a>
 <a class="sourceLine" id="cb10-17" data-line-number="17">       <span class="dt">bty=</span><span class="st">&quot;n&quot;</span>, <span class="dt">pt.cex=</span><span class="dv">2</span>)</a></code></pre></div>
-<p><img src="Bird_survey_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="Bird_survey_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p><span style="color: purple;"> <strong>Question 1</strong>: Please write down two conclusions you can make from this figure. </span></p>
 <!---
 Next, we plot for each species the change in counts through time. To do so, we will use a programming tool called a `for loop`. *For loops* are iterative operations that loop over a program by using an index. If you are unfamiliar with *for loops* you can find a brief introduction [here](https://clausrueffler.github.io/CodingWithR/Scripting.html). It is probably easiest to digest with a simple example.
@@ -533,7 +536,7 @@ That was a trivial example but hopefully you get the general idea. Let us try us
 <a class="sourceLine" id="cb13-9" data-line-number="9"><span class="co"># Last, add a title at the top of the panel with the name of the species</span></a>
 <a class="sourceLine" id="cb13-10" data-line-number="10">  <span class="kw">mtext</span>(<span class="kw">unique</span>(birds<span class="op">$</span>species)[i], <span class="dv">3</span>, <span class="dv">0</span>, <span class="dt">cex=</span><span class="fl">0.5</span>, <span class="dt">font=</span><span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb13-11" data-line-number="11">}</a></code></pre></div>
-<p><img src="Bird_survey_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="Bird_survey_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <!---
 
 ```r
@@ -559,7 +562,7 @@ for (i in 1:length(unique(birds$species))){
 }
 ```
 
-<img src="Bird_survey_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+<img src="Bird_survey_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 --->
 <p>Ok…what’s going on? Are you surprised to see that the trends for all species appear to be increasing? Are birds really taking over Sweden?!? No, unfortunately not…</p>
 <p>The general increase in total observations per species is at least partly due to the fact that the Swedish Bird Inventory added new survey routes during the first years so that the number of routes sampled per year is increasing. This is problematic for making valid comparisons between years because we are obviously likely to count more birds when we survey more routes (<em>think back to our lecture on</em> <strong><em>rarefaction</em></strong>).</p>
@@ -602,7 +605,7 @@ for (i in 1:length(unique(birds$species))){
 }
 ```
 
-<img src="Bird_survey_files/figure-html/unnamed-chunk-13-1.png" width="672" />
+<img src="Bird_survey_files/figure-html/unnamed-chunk-14-1.png" width="672" />
 --->
 <p><span style="color: purple;"> <strong>Question 2</strong>: After correcting for number of routes sampled per year, which species appears to have the most obvious increase in abundance over the survey period? Which species appears to have the most obvious decrease in abundance over the survey period? Can you detect a general trend among farmland and forest species? </span></p>
 <p>For times series like these it is common to report the data as an index relative to the count of the first year. Given the code that we have, it is easy to implement this change. All that we have to do is to divide the average number of individuals per route by the result for the first year. Let us have a look at the time series for the Skylark <em>Alauda arvensis</em>.</p>

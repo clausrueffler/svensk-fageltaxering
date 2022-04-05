@@ -27,7 +27,7 @@ This exercise is designed to familiarize you with the data from *The Swedish Bir
 
 ### Download bird data for this exercise and read into R
 
-You can download the data for this exercise [here](https://clausrueffler.github.io/svensk-fageltaxering/downloads/bird_data_subset.csv).
+You can download the data for this exercise [here](https://clausrueffler.github.io/svensk-fageltaxering/downloads/bird_data_subset.csv). Alternatively, you can download the data as an R-data file [here](https://clausrueffler.github.io/svensk-fageltaxering/downloads/bird_data_subset.RDA). 
 
 The dataset that you can download here is a reduced version of the full dataset, which is available [from the GBIF website](https://www.gbif.org/dataset/91fa1a0d-a208-40aa-8a6e-f2c0beb9b253).
 
@@ -35,6 +35,13 @@ Move the downloaded *.csv* file into your project folder (working directory) and
 
 ```{r, echo=T, eval=T}
 birds <- read.csv("bird_data_subset.csv", stringsAsFactors = FALSE)
+
+# or
+birds <- readRDS("bird_data_subset.RDA")
+```
+
+```{r, echo=T, eval=T}
+
 ```
 
 ## Trends of farmland and forest bird species
