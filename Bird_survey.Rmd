@@ -124,7 +124,7 @@ Convince yourself that this produces the desired result. Let us visualize the to
 species.data$col <- ifelse(species.data$habitat %in% "Farms", "darkorange3", "forestgreen")
 
 # Set figure margins for plotting
-par(mar=c(13,4,1,1))
+par(mar=c(7,4,1,1))
 
 # Create a barplot of total counts per species
 barplot(species.data$total.count/1000, 
