@@ -61,7 +61,7 @@ forest.arith <- rowSums(count.per.year[ , 11:20])/10
 
 # Time series plots.
 plot(1998:2021, farmland.arith,
-       ylim = c(0.8, max(farmland.arith) + 0.1), yaxs="i",
+       ylim = c(0.8, max(forest.arith) + 0.1), yaxs="i",
        type="l", ylab="arithmetic mean index", xlab=NA,
        col= "darkorange3", lwd=3)
 lines(1998:2021, forest.arith,
@@ -82,7 +82,7 @@ farmland.geom <- exp(rowMeans(log(index[ , 1:10])))
 forest.geom <- exp(rowMeans(log(index[ , 11:20])))
 
 plot(1998:2021, farmland.geom,
-     ylim = c(0.8, max(farmland.geom) + 0.1), yaxs="i", 
+     ylim = c(0.8, max(forest.geom) + 0.1), yaxs="i", 
      ylab="geometric mean index", xlab=NA,
      type="l", col= "darkorange3", lwd=3)
 lines(1998:2021, forest.geom,
