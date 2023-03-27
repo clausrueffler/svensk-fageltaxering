@@ -16,17 +16,17 @@ klippy::klippy(position = c('top', 'right'))
 
 ## Indices for Farmland and Forest Birds
 
-All countries in the European Union have to report population trends for their common farmland and forst birds. These data are collect by the *European Bird Census Council* and you can find them [here](https://pecbms.info/trends-and-indicators/indicators/).
+All countries in the European Union have to report population trends for their common farmland and forest birds. These data are collect by the *European Bird Census Council* and you can find them [here](https://pecbms.info/trends-and-indicators/indicators/).
 
 In this exercise, we aim to produce such indices based on the data from the previous exercise. 
 
-The task seems straightforward. We have ten common farmland and ten common forst birds, each with their own trend. We just have to combine the trends of ten species into one common trend. An obvious way would be to simply add all the trends and then divide by the number of species. This would be the *arithmetic mean* of the species trends. Let's do that.
+The task seems straightforward. We have ten common farmland and ten common forest birds, each with their own trend. We just have to combine the trends of ten species into one common trend. An obvious way would be to simply add all the trends and then divide by the number of species. This would be the *arithmetic mean* of the species trends. Let's do that.
 
-First, here again the code that produces the index value for each speces for each year.
+First, here again the code that produces the index value for each species for each year.
 
 ```{r}
 # Sum over all routes for each species and each year.
-count.per.year <- tapply(birds$individualCount, list(birds$year, birds$species), sum)
+count.per.year <- tapply(birds$organismQuantity, list(birds$year, birds$species), sum)
 # As in the previous exercise, we have re-order the species from alphabetic back to the original order. We use the same trick, the match-function.
 count.per.year <- count.per.year[ , c(match(species.data$species, names(total.counts)))]
 
@@ -39,25 +39,40 @@ for (i in 1:ncol(count.per.year)){
 
 Next, we plot the time series of the arithmetic mean of the indices for farmland and forest birds.
 
+```{r}
+# Sum over all routes for each species and each year.
+count.per.year <- tapply(birds$organismQuantity, list(birds$year, birds$species), sum)
+# As in the previous exercise, we have re-order the species from alphabetic back to the original order. We use the same trick, the match-function.
+count.per.year <- count.per.year[ , c(match(species.data$species, names(total.counts)))]
+
+# Index for each species for each year with counts expressed relative to the count in the first year.
+for (i in 1:ncol(count.per.year)){
+  count.per.year[ , i] <- (count.per.year[ , i]/nroutes)/(count.per.year[1 , i]/nroutes[1])
+  index <- count.per.year
+}
+```
+
+Now, we plot the time series of the arithmetic mean of the indices for farmland and forest birds.
+
 ```{r, eval=T}
-# Compute the arithmetic mean by summing over all columns with farmland and forest birds, respectivley, and then dividing by the number of species.
+# Compute the arithmetic mean by summing over all columns with farmland and forest birds, respectively, and then dividing by the number of species.
 farmland.arith <- rowSums(count.per.year[ , 1:10])/10
 forest.arith <- rowSums(count.per.year[ , 11:20])/10
 
 # Time series plots.
-plot(1996:2018, farmland.arith,
+plot(1998:2021, farmland.arith,
        ylim = c(0.8, max(farmland.arith) + 0.1), yaxs="i",
        type="l", ylab="arithmetic mean index", xlab=NA,
        col= "darkorange3", lwd=3)
-lines(1996:2018, forest.arith,
+lines(1998:2021, forest.arith,
        type="l", ylab="arithmetic mean index", xlab=NA,
        col= "forestgreen", lwd=3)
-legend("top", legend = c("Farmland","Forest"), col= c("darkorange3", "forestgreen"), lty = 1, lwd = 3) 
+legend("top", legend = c("Farmland","Forest"), col= c("darkorange3", "forestgreen"), lty = 1, lwd = 3)
 ```
 
-Is it a good idea to compute arithmetic means for a multi-species index? Let us do a litte thought experiment. Consider two species. The population of the first one doubles from one year to the next, that is, it has an index of 2 in the second year. The population of the second one halfs, it has an index of 0.5 in the second year. The arithmetic mean equals $(2 + 0.5)/2 = 1.25$, suggesting a positve trend on average. It should be clear that this is misleading: the effects of one population doubling and the one halfing should cancel out each other!
+Is it a good idea to compute arithmetic means for a multi-species index? Let us do a little thought experiment. Consider two species. The population of the first one doubles from one year to the next, that is, it has an index of 2 in the second year. The population of the second one halves, it has an index of 0.5 in the second year. The arithmetic mean equals $(2 + 0.5)/2 = 1.25$, suggesting a positive trend on average. It should be clear that this is misleading: the effects of one population doubling and the one halving should cancel out each other!
 
-To achieve this, we have to compute the *geometric mean* rather than the arithmetic mean. The geometric mean for our example equals $\sqrt{2*0.5} = 1$, as desired. Please read the short section on indicators in the course book by Sutherland (2006, pages 80 - 83) for a slighlty longer discussion of this issue. You can download the relevant pages [here](https://clausrueffler.github.io/svensk-fageltaxering/downloads/Sutherland06Indicators.pdf).
+To achieve this, we have to compute the *geometric mean* rather than the arithmetic mean. The geometric mean for our example equals $\sqrt{2*0.5} = 1$, as desired. Please read the short section on indicators in the course book by Sutherland (2006, pages 80 - 83) for a slightly longer discussion of this issue. You can download the relevant pages [here](https://clausrueffler.github.io/svensk-fageltaxering/downloads/Sutherland06Indicators.pdf).
 
 Following Box 2.19 in Sutherland (2006) it is easy to compute the geometric mean index.
 
@@ -66,72 +81,16 @@ Following Box 2.19 in Sutherland (2006) it is easy to compute the geometric mean
 farmland.geom <- exp(rowMeans(log(index[ , 1:10])))
 forest.geom <- exp(rowMeans(log(index[ , 11:20])))
 
-plot(1996:2018, farmland.geom,
+plot(1998:2021, farmland.geom,
      ylim = c(0.8, max(farmland.geom) + 0.1), yaxs="i", 
      ylab="geometric mean index", xlab=NA,
      type="l", col= "darkorange3", lwd=3)
-lines(1996:2018, forest.geom,
+lines(1998:2021, forest.geom,
        type="l", col= "forestgreen", lwd=3)
 legend("top", legend = c("Farmland","Forest"), col= c("darkorange3", "forestgreen"), lty = 1, lwd = 3) 
 ```
 
 <span style="color: purple;">
 **Question 4**: What are two conclusions you can make from this figure?
-For farmland birds compare your result with the offical Swedish data that you can find [here](https://www.sverigesmiljomal.se/miljomalen/ett-rikt-odlingslandskap/faglar-och-fjarilar/). If your results, differ from those on this website, what could be the reason?
+For farmland birds compare your result with the official Swedish data that you can find [here](https://www.sverigesmiljomal.se/miljomalen/ett-rikt-odlingslandskap/faglar-och-fjarilar/). If your results, differ from those on this website, what could be the reason?
 </span>
-
-
-
-<!---
-<span style="color: purple;">
-**Bonus Question**: For the plot above, we pooled the raw observations among species in each group. This leads to a "weighted average" whereby more abundant species influence the pooled trend more than rare species.  In other words, the lines in this figure are driven by the most abundant species.  How might we compute counts per year for each habitat group with more equal weighting of common and rare species? (You don't need to write code for this; just try and describe how it might be done.)
-</span>
---->
-
-<!---
-Bob's old code.
-```{r, eval=T}
-nroutes <- colSums(table(birds$locationID, birds$year) > 0)
-
-par(mfcol=c(5,4), mar=c(2,4,1.5,1), oma=c(0,4,0,4))
-
-for (i in 1:ncol(count.per.year)){
-  plot(1996:2018, (count.per.year[ , i]/nroutes)/(count.per.year[1 , i]/nroutes[1]),
-       # for better comparision with the plots from Svensk Fågeltaxering we change the y-axis so that starts at zero and is exactly as long as needed 
-       ylim = c(0, max((count.per.year[ , i]/nroutes)/(count.per.year[1 , i]/nroutes[1])+0.3)), yaxs="i",
-       type="l", ylab="Total Obs.", xlab=NA,
-       col=ifelse(i %in% 1:10, "darkorange3", "forestgreen"), 
-       lwd=3)
-  mtext(unique(birds$species)[i], 3, 0, cex=0.5, font=2)
-}
-```
-
-```{r, eval=T, fig.width=5, fig.height=4}
-# First split the dataset into separate woodland and farmland species datasets
-farmland_birds <- birds[birds$habitat == "Farms",]
-woodland_birds <- birds[birds$habitat == "Woods",]
-
-# Next count the total observations per year for each group
-farmland_birds_counts <- tapply(farmland_birds$individualCount, farmland_birds$year, sum)
-woodland_birds_counts <- tapply(woodland_birds$individualCount, woodland_birds$year, sum)
-
-# Do not forget to correct for number of routes sampled!
-farmland_birds_counts <- farmland_birds_counts/nroutes
-woodland_birds_counts <- woodland_birds_counts/nroutes
-
-# Plot the results
-plot(names(farmland_birds_counts), 
-     farmland_birds_counts, 
-     type="l", col="darkorange3", lwd=5,
-     xlab=NA, ylab="Obs./route")
-
-lines(names(woodland_birds_counts), 
-     woodland_birds_counts, 
-     type="l", col="forestgreen", lwd=5)
-
-legend("topright", legend=c("Farmland","Woodland"), 
-       pch=22, pt.bg=c("darkorange3", "forestgreen"),
-       bty="n", pt.cex=2)
-```
---->
-

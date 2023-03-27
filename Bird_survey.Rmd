@@ -16,38 +16,34 @@ klippy::klippy(position = c('top', 'right'))
 
 ## Introduction
 
-This exercise is designed to familiarize you with the data from *The Swedish Bird Inventory (Svensk Fågeltaxering)*. On [this](https://www.fageltaxering.lu.se/) website, you can read more about the dataset (field protocol, history, etc.). A secondary aim is to continue improving your skills with R.
+This exercise is designed to familiarize you with the data from *The Swedish Bird Inventory (Svensk Fågeltaxering)*. On [this](https://www.fageltaxering.lu.se/) website, you can read more about the data set (field protocol, history, etc.). A second aim is to continue improving your R-skills.
 
 ## Getting started
 ### Working directory, Project folders, and Reading data
 
 * Remember that your working directory is usually the folder where your R script or R project is kept.
 * If you place the data for today's exercise in the same folder as the project you created for the exercises in this class, you can simply continue working in that project and the data should be available.
-* Otherwise refer to the "Introduction to R" exercise for more details on working directories and loading data in R.
+* If you are unfamiliar with R-projects [this website](https://clausrueffler.github.io/CodingWithR/Projects.html) is a starting point to learn more.
 
-### Download bird data for this exercise and read into R
+### Download bird data for this exercise and read them into R
 
-You can download the data for this exercise [here](https://clausrueffler.github.io/svensk-fageltaxering/downloads/bird_data_subset.csv). Alternatively, you can download the data as an R-data file [here](https://clausrueffler.github.io/svensk-fageltaxering/downloads/bird_data_subset.RDA). 
+You can download the data for this exercise [here](https://clausrueffler.github.io/svensk-fageltaxering/downloads/bird_data_subset2023.csv). Alternatively, you can download the data as an R-data file [here](https://clausrueffler.github.io/svensk-fageltaxering/downloads/bird_data_subset2023.RDA). 
 
-The dataset that you can download here is a reduced version of the full dataset, which is available [from the GBIF website](https://www.gbif.org/dataset/91fa1a0d-a208-40aa-8a6e-f2c0beb9b253).
+The data set that you can download here is a reduced version of the full data set, which is available [from the GBIF website](https://www.gbif.org/dataset/91fa1a0d-a208-40aa-8a6e-f2c0beb9b253).
 
 Move the downloaded *.csv* file into your project folder (working directory) and then read the data into R:
 
 ```{r, echo=T, eval=T}
-birds <- read.csv("bird_data_subset.csv", stringsAsFactors = FALSE)
+birds <- read.csv("bird_data_subset2023.csv", stringsAsFactors = FALSE)
 
 # or
-birds <- readRDS("bird_data_subset.RDA")
-```
-
-```{r, echo=T, eval=T}
-
+birds <- readRDS("bird_data_subset2023.RDA")
 ```
 
 ## Trends of farmland and forest bird species
 ### Background
 
-Below, you can find two lists of ten common bird species associated with farmlands and forest habitats, respectively. The dataset we are working with here has been reduced to include only these species and only a few columns with the most relevant information. *Click on the names to get more information on the species and to see some nice pictures!*
+Below, you can find two lists of ten common bird species associated with farmlands and forest habitats, respectively. The data set we are working with has been reduced to include only the following twenty species and only a few columns with the most relevant information. *Click on the names to get more information on the species and to see some nice pictures!*
 
 #### Farmland birds:
 * [Common Kestrel (*Falco tinnunculus*)](https://en.wikipedia.org/wiki/Common_kestrel)
@@ -75,7 +71,7 @@ Below, you can find two lists of ten common bird species associated with farmlan
 
 ### Exploring the data
 
-Let's start by looking at a quick summariy of the dataset in order to get a feel for its content and structure.
+Let's start by looking at a quick summary of the data set in order to get a feel for its content and structure.
 
 ```{r,  eval=T}
 # dimension of the data frame birds
@@ -84,13 +80,13 @@ dim(birds)
 head(birds, 3 )
 ```
 
-In this dataset, each row (or, each *observation*) represents the count of a species in a given year, on a given survey route.  The first row, for example, says that there were 2 individuals of *Alauda arvensis* observed in route number 1 during the year 1997.  Here's a description of the columns:
+In this data set, each row (or, each *observation*) represents the count of a species in a given year on a given survey route.  The first row, for example, says that there was 21 individual of *Accipiter nisus* (Sparrowhawk) observed in route number 3 during the year 1998.  Here's a description of the columns:
 
-* *locationID* gives the route number
 * *year* gives the year of the observation
 * *species* gives the species observed
-* *individualCount* gives the number of individuals observed
+* *organismQuantity* gives the number of individuals observed
 * *decimalLongitude* and *decimalLatitude* give the geographic coordinates for each route (in WGS84).
+* *LocationID* gives the route number
 * *habitat* gives the main habitat association for the species (i.e., farmland or forest)
 
 We might be interested to first get an aggregated summary of the data. For instance, let us look for each species at the total number of observations, that is, summed over all routes and over all years.  To do this, we construct a `data.frame` to hold information at the species-level. We do this in two steps. First, we simplify the data frame `birds` so that it only contains two columns, `species` and `habitat`.
@@ -104,7 +100,7 @@ Notice, that this data frame lists first all farmland species and then all fores
 
 ```{r,  eval=T, results='hide'}
 # Sum counts for each species (over all years)
-total.counts <- tapply(birds$individualCount, birds$species, sum)
+total.counts <- tapply(birds$organismQuantity, birds$species, sum)
 total.counts
 ```
 
@@ -117,7 +113,7 @@ species.data$total.count <- total.counts[match(species.data$species, names(total
 species.data
 ```
 
-Convince yourself that this produces the desired result. Let us visualize the total counts in a bar plot where the species are order by habitat affiliation.
+Convince yourself that this produces the desired result. Let us visualize the total counts in a bar plot where the species are ordered by habitat affiliation.
 
 ```{r,  eval=T}
 # Make a vector of colors for plotting
@@ -126,7 +122,7 @@ species.data$col <- ifelse(species.data$habitat %in% "Farms", "darkorange3", "fo
 # Set figure margins for plotting
 par(mar=c(7,4,1,1))
 
-# Create a barplot of total counts per species
+# Create a bar plot of total counts per species
 barplot(species.data$total.count/1000, 
         names.arg=species.data$species,
         las=2, col=species.data$col, 
@@ -154,7 +150,7 @@ for (year in 2010:2015){
   Sys.sleep(0.5)
   }
 ```
-That was a trivial example but hopefully you get the general idea. Let us try using a more complex *for loop* to plot the temporal trends for each bird species in our dataset.
+That was a trivial example but hopefully you get the general idea. Let us try using a more complex *for loop* to plot the temporal trends for each bird species in our data set.
 --->
 
 ### Time series plots
@@ -162,9 +158,9 @@ That was a trivial example but hopefully you get the general idea. Let us try us
 Next, we plot for each species the change in counts through time. In order to do this we start by creating a new data frame in which we store the for each species and for each year the total count summed over all routes. We can do this using the `tapply`-function but now with respect to two factors, namely, species and year.
 
 ```{r eval = T, results = 'hide'}
-count.per.year <- tapply(birds$individualCount, list(birds$year, birds$species), sum)
+count.per.year <- tapply(birds$organismQuantity, list(birds$year, birds$species), sum)
 
-# Convice yourself that this gives the desired result.
+# Convince yourself that this gives the desired result.
 head(count.per.year, 3)
 ```
 
@@ -183,8 +179,8 @@ Now we are ready to plot for each species the time series. To do so, we use a pr
 # First set the layout and margins of the figure
 par(mfcol=c(5,4), mar=c(2,4,1.5,1), oma=c(0,4,0,4))
 
-for (i in 1:ncol(count.per.year)){# this for-loop interatively produces the plot for the different species by cycling through the columns of the data frame `count.per.year`.
-  plot(1996:2018, count.per.year[ , i], 
+for (i in 1:ncol(count.per.year)){# this for-loop iteratively produces the plot for the different species by cycling through the columns of the data frame `count.per.year`.
+  plot(1998:2021, count.per.year[ , i], 
        type="l", ylab="Total Obs.", xlab=NA,
        col=ifelse(i %in% 1:10, "darkorange3", "forestgreen"), 
        lwd=3)
@@ -206,7 +202,7 @@ for (i in 1:length(unique(birds$species))){
 # Next we subset the data corresponding to the i-th species
   focal_data <- birds[birds$species %in% unique(birds$species)[i],]
 # Next we compute the counts per year for the i-th species
-  trend <- tapply(focal_data$individualCount, focal_data$year, sum)  
+  trend <- tapply(focal_data$organismQuantity, focal_data$year, sum)  
 # Now we plot the trend through time for the i-th species
   plot(names(trend), trend,
        type="l", ylab="Total Obs.", xlab=NA,
@@ -226,7 +222,7 @@ Now let us try and correct for the different number of routes sampled per year b
 
 ```{r, eval=F}
 # Compute the number of routes recorded for each year
-nroutes <- colSums(table(birds$locationID, birds$year) > 0)
+nroutes <- colSums(table(birds$LocationID, birds$year) > 0)
 
 # Let's redo the figure by dividing the number of observations 
 # per species per year by the number of routes surveyed each year.
@@ -234,7 +230,7 @@ nroutes <- colSums(table(birds$locationID, birds$year) > 0)
 par(mfcol=c(5,4), mar=c(2,4,1.5,1), oma=c(0,4,0,4))
 
 for (i in 1:ncol(count.per.year)){
-  plot(1996:2018, count.per.year[ , i]/nroutes, 
+  plot(1998:2021, count.per.year[ , i]/nroutes, 
        type="l", ylab="Total Obs.", xlab=NA,
        col=ifelse(i %in% 1:10, "darkorange3", "forestgreen"), 
        lwd=3)
@@ -247,7 +243,7 @@ for (i in 1:ncol(count.per.year)){
 ```{r, eval=T}
 # Bob's original code
 # Compute the number of routes recorded for each year
-nroutes <- colSums(table(birds$locationID, birds$year) > 0)
+nroutes <- colSums(table(birds$LocationID, birds$year) > 0)
 
 # Let's redo the figure by dividing the number of observations 
 # per species per year by the number of routes surveyed each year
@@ -257,7 +253,7 @@ for (i in 1:length(unique(birds$species))){
   focal_data <- birds[birds$species %in% unique(birds$species)[i],]
   # Plot a panel for each species (note that we now divide by 'nroutes')
   plot(sort(unique(focal_data$year)),
-  tapply(focal_data$individualCount, focal_data$year, sum)/nroutes, 
+  tapply(focal_data$organismQuantity, focal_data$year, sum)/nroutes, 
        type="l", ylab="Obs. per route", xlab=NA, lwd=3,
        col=ifelse("Farms" %in% focal_data$habitat, "darkorange3", "forestgreen"))
   mtext(unique(birds$species)[i], 3, 0, cex=0.5, font=2)
@@ -276,7 +272,7 @@ For times series like these it is common to report the data as an index relative
 count.per.year[ , 1]/nroutes
 ```
 
-The same timeseries but with all data divided by the result from the first year. Note. that now the count for the first year equals 1.
+The same time series but with all data divided by the result from the first year. Note. that now the count for the first year equals 1.
 
 ```{r eval=F}
 (count.per.year[ , 1]/nroutes)/(count.per.year[1 , 1]/nroutes[1])
@@ -288,8 +284,8 @@ With this small modification. our time series plots can be computed as follows.
 par(mfcol=c(5,4), mar=c(2,4,1.5,1), oma=c(0,4,0,4))
 
 for (i in 1:ncol(count.per.year)){
-  plot(1996:2018, (count.per.year[ , i]/nroutes)/(count.per.year[1 , i]/nroutes[1]),
-       # for better comparision with the plots from Svensk Fågeltaxering we change the y-axis so that it starts at zero and is exactly as long as needed 
+  plot(1998:2021, (count.per.year[ , i]/nroutes)/(count.per.year[1 , i]/nroutes[1]),
+       # for better comparison with the plots from Svensk Fågeltaxering we change the y-axis so that it starts at zero and is exactly as long as needed 
        ylim = c(0, max((count.per.year[ , i]/nroutes)/(count.per.year[1 , i]/nroutes[1])+0.3)), yaxs="i",
        type="l", ylab="Total Obs.", xlab=NA,
        col=ifelse(i %in% 1:10, "darkorange3", "forestgreen"), 
