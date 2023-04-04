@@ -96,7 +96,7 @@ species.data <- unique(birds[ , c("species", "habitat")])
 species.data
 ```
 
-Notice, that this data frame lists first all farmland species and then all forest species. Second, to this simpliefied data frame, we want to add the total number of observations for each species. We use the `tapply` function to sum the counts of each species.
+Notice, that this data frame lists first all farmland species and then all forest species. Second, to this simplified data frame, we want to add the total number of observations for each species. We use the `tapply` function to sum the counts of each species.
 
 ```{r,  eval=T, results='hide'}
 # Sum counts for each species (over all years)
@@ -155,7 +155,7 @@ That was a trivial example but hopefully you get the general idea. Let us try us
 
 ### Time series plots
 
-Next, we plot for each species the change in counts through time. In order to do this we start by creating a new data frame in which we store the for each species and for each year the total count summed over all routes. We can do this using the `tapply`-function but now with respect to two factors, namely, species and year.
+Next, we plot for each species the change in counts through time. In order to do this we start by creating a new data frame in which we store for each species and for each year the total count summed over all routes. We can do this using the `tapply`-function but now with respect to two factors, namely, species and year.
 
 ```{r eval = T, results = 'hide'}
 count.per.year <- tapply(birds$organismQuantity, list(birds$year, birds$species), sum)
@@ -278,7 +278,7 @@ The same time series but with all data divided by the result from the first year
 (count.per.year[ , 1]/nroutes)/(count.per.year[1 , 1]/nroutes[1])
 ```
 
-With this small modification. our time series plots can be computed as follows.
+With this small modification our time series plots can be computed as follows.
 
 ```{r, eval=F}
 par(mfcol=c(5,4), mar=c(2,4,1.5,1), oma=c(0,4,0,4))
