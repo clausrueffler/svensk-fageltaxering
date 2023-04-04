@@ -454,7 +454,7 @@ $(document).ready(function () {
 ## 2          3   Farms
 ## 3          3   Farms
 ## 5          3   Farms</code></pre>
-<p>In this data set, each row (or, each <em>observation</em>) represents the count of a species in a given year on a given survey route. The first row, for example, says that there was 21 individual of <em>Accipiter nisus</em> (Sparrowhawk) observed in route number 3 during the year 1998. Here’s a description of the columns:</p>
+<p>In this data set, each row (or, each <em>observation</em>) represents the count of a species in a given year on a given survey route. The first row, for example, says that there was 4 individual of <em>Alauda arvensis</em> (Skylark) observed in route number 3 during the year 1998. Here’s a description of the columns:</p>
 <ul>
 <li><em>year</em> gives the year of the observation</li>
 <li><em>species</em> gives the species observed</li>
@@ -582,8 +582,8 @@ for (i in 1:length(unique(birds$species))){
 
 <img src="Bird_survey_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 --->
-<p>Ok…what’s going on? Are you surprised to see that the trends for all species appear to be increasing? Are birds really taking over Sweden?!? No, unfortunately not…</p>
-<p>The general increase in total observations per species is at least partly due to the fact that the Swedish Bird Inventory added new survey routes during the first years so that the number of routes sampled per year is increasing. This is problematic for making valid comparisons between years because we are obviously likely to count more birds when we survey more routes (<em>think back to our lecture on</em> <strong><em>rarefaction</em></strong>).</p>
+<p>Ok…what’s going on? Are you surprised to see that the trends for almost all species appear to be increasing? Are birds really taking over Sweden?!? No, unfortunately not…</p>
+<p>The general increase in total observations per species is at least partly due to the fact that the Swedish Bird Inventory added new survey routes during the first years so that the number of routes sampled per year is increasing. This is problematic for making valid comparisons between years because we are obviously likely to count more birds when we survey more routes (<em>think back to the lecture on</em> <strong><em>rarefaction</em></strong>).</p>
 <p>Now let us try and correct for the different number of routes sampled per year by computing the number of counts per species per year <em>per survey route</em>.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the number of routes recorded for each year</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>nroutes <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">table</span>(birds<span class="sc">$</span>LocationID, birds<span class="sc">$</span>year) <span class="sc">&gt;</span> <span class="dv">0</span>)</span>

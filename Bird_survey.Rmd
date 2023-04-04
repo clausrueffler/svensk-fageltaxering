@@ -80,7 +80,7 @@ dim(birds)
 head(birds, 3 )
 ```
 
-In this data set, each row (or, each *observation*) represents the count of a species in a given year on a given survey route.  The first row, for example, says that there was 21 individual of *Accipiter nisus* (Sparrowhawk) observed in route number 3 during the year 1998.  Here's a description of the columns:
+In this data set, each row (or, each *observation*) represents the count of a species in a given year on a given survey route.  The first row, for example, says that there was 4 individual of *Alauda arvensis* (Skylark) observed in route number 3 during the year 1998.  Here's a description of the columns:
 
 * *year* gives the year of the observation
 * *species* gives the species observed
@@ -214,9 +214,9 @@ for (i in 1:length(unique(birds$species))){
 ```
 --->
 
-Ok...what's going on? Are you surprised to see that the trends for all species appear to be increasing?  Are birds really taking over Sweden?!?  No, unfortunately not...
+Ok...what's going on? Are you surprised to see that the trends for almost all species appear to be increasing?  Are birds really taking over Sweden?!?  No, unfortunately not...
 
-The general increase in total observations per species is at least partly due to the fact that the Swedish Bird Inventory added new survey routes during the first years so that the number of routes sampled per year is increasing. This is problematic for making valid comparisons between years because we are obviously likely to count more birds when we survey more routes (*think back to our lecture on* ***rarefaction***).
+The general increase in total observations per species is at least partly due to the fact that the Swedish Bird Inventory added new survey routes during the first years so that the number of routes sampled per year is increasing. This is problematic for making valid comparisons between years because we are obviously likely to count more birds when we survey more routes (*think back to the lecture on* ***rarefaction***).
 
 Now let us try and correct for the different number of routes sampled per year by computing the number of counts per species per year *per survey route*.
 
