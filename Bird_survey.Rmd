@@ -166,7 +166,7 @@ head(count.per.year, 3)
 
 Note, that again these counts are arranged alphabetically with respect to species names. We can use the same trick as above to rearrange the order so as to match the original order we use in the data frame `species.data`.
 
-```{r eval=F}
+```{r eval=T, results = 'hide'}
 count.per.year <- count.per.year[ , c(match(species.data$species, names(total.counts)))]
 
 # Let us inspect whether the data look as intended.
