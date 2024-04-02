@@ -393,13 +393,14 @@ $(document).ready(function () {
 </div>
 <div id="download-bird-data-for-this-exercise-and-read-them-into-r" class="section level3">
 <h3>Download bird data for this exercise and read them into R</h3>
-<p>You can download the data for this exercise <a href="https://clausrueffler.github.io/svensk-fageltaxering/bird_data_subset2023.csv">here</a>. Alternatively, you can download the data as an R-data file <a href="https://clausrueffler.github.io/svensk-fageltaxering/bird_data_subset2023.RDA">here</a>.</p>
+<p>You can download the data for this exercise as an R-data file <a href="https://clausrueffler.github.io/svensk-fageltaxering/bird_data_subset2023.RDA">here</a>. Alternatively, you can download the data as a <em>.csv</em> <a href="https://clausrueffler.github.io/svensk-fageltaxering/bird_data_subset2023.csv">here</a>.</p>
 <p>The data set that you can download here is a reduced version of the full data set, which is available <a href="https://www.gbif.org/dataset/91fa1a0d-a208-40aa-8a6e-f2c0beb9b253">from the GBIF website</a>.</p>
-<p>Move the downloaded <em>.csv</em> file into your project folder (working directory) and then read the data into R:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>birds <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;bird_data_subset2023.csv&quot;</span>, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<p>Move the downloaded <em>.RDA</em>-file (or, alternatively, the <em>.csv</em>-file) into your project folder (working directory) and then read the data into R:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>birds <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;bird_data_subset2023.RDA&quot;</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>birds <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;bird_data_subset2023.RDA&quot;</span>)</span></code></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>birds <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;bird_data_subset2023.csv&quot;</span>, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 </div>
 </div>
 <div id="trends-of-farmland-and-forest-bird-species" class="section level2">
@@ -447,13 +448,13 @@ $(document).ready(function () {
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># first three rows of the data frame birds</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(birds, <span class="dv">3</span> )</span></code></pre></div>
 <pre><code>##   year             species organismQuantity decimalLongitude decimalLatitude
-## 2 1998     Alauda arvensis                4          11.3098         58.4315
-## 3 1998    Anthus pratensis                3          11.3098         58.4315
-## 5 1998 Emberiza citrinella               10          11.3098         58.4315
+## 1 1998     Alauda arvensis                4          11.3098         58.4315
+## 2 1998    Anthus pratensis                3          11.3098         58.4315
+## 3 1998 Emberiza citrinella               10          11.3098         58.4315
 ##   LocationID habitat
+## 1          3   Farms
 ## 2          3   Farms
-## 3          3   Farms
-## 5          3   Farms</code></pre>
+## 3          3   Farms</code></pre>
 <p>In this data set, each row (or, each <em>observation</em>) represents the count of a species in a given year on a given survey route. The first row, for example, says that there was 4 individual of <em>Alauda arvensis</em> (Skylark) observed in route number 3 during the year 1998. Here’s a description of the columns:</p>
 <ul>
 <li><em>year</em> gives the year of the observation</li>
@@ -474,27 +475,27 @@ $(document).ready(function () {
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We add a new column to the data frame `species.data` containing the total counts in the correct order</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>species.data<span class="sc">$</span>total.count <span class="ot">&lt;-</span> total.counts[<span class="fu">match</span>(species.data<span class="sc">$</span>species, <span class="fu">names</span>(total.counts))]</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>species.data</span></code></pre></div>
-<pre><code>##                          species habitat total.count
-## 2                Alauda arvensis   Farms       30002
-## 3               Anthus pratensis   Farms       31141
-## 5            Emberiza citrinella   Farms       34165
-## 8               Sturnus vulgaris   Farms       57801
-## 9                Sylvia communis   Farms       18044
-## 19             Falco tinnunculus   Farms        1009
-## 20               Passer montanus   Farms       13302
-## 25             Vanellus vanellus   Farms       14325
-## 37              Saxicola rubetra   Farms       12850
-## 58               Motacilla flava   Farms       14669
-## 1                Accipiter nisus   Woods         536
-## 4               Anthus trivialis   Woods       98580
-## 6        Phoenicurus phoenicurus   Woods       36095
-## 7                  Spinus spinus   Woods       84538
-## 11             Dendrocopos major   Woods       21318
-## 12           Garrulus glandarius   Woods        9040
-## 13                Periparus ater   Woods        9948
-## 43 Coccothraustes coccothraustes   Woods        1396
-## 96             Pyrrhula pyrrhula   Woods        6234
-## 99        Phylloscopus collybita   Woods       13296</code></pre>
+<pre><code>##                             species habitat total.count
+## 1                   Alauda arvensis   Farms       30002
+## 2                  Anthus pratensis   Farms       31141
+## 3               Emberiza citrinella   Farms       34165
+## 4                  Sturnus vulgaris   Farms       57801
+## 5                   Sylvia communis   Farms       18044
+## 9                 Falco tinnunculus   Farms        1009
+## 10                  Passer montanus   Farms       13302
+## 13                Vanellus vanellus   Farms       14325
+## 16                 Saxicola rubetra   Farms       12850
+## 28                  Motacilla flava   Farms       14669
+## 29187               Accipiter nisus   Woods         536
+## 29188              Anthus trivialis   Woods       98580
+## 29189       Phoenicurus phoenicurus   Woods       36095
+## 29190                 Spinus spinus   Woods       84538
+## 29192             Dendrocopos major   Woods       21318
+## 29193           Garrulus glandarius   Woods        9040
+## 29194                Periparus ater   Woods        9948
+## 29210 Coccothraustes coccothraustes   Woods        1396
+## 29237             Pyrrhula pyrrhula   Woods        6234
+## 29239        Phylloscopus collybita   Woods       13296</code></pre>
 <p>Convince yourself that this produces the desired result. Let us visualize the total counts in a bar plot where the species are ordered by habitat affiliation.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a vector of colors for plotting</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>species.data<span class="sc">$</span>col <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(species.data<span class="sc">$</span>habitat <span class="sc">%in%</span> <span class="st">&quot;Farms&quot;</span>, <span class="st">&quot;darkorange3&quot;</span>, <span class="st">&quot;forestgreen&quot;</span>)</span>

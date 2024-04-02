@@ -27,17 +27,19 @@ This exercise is designed to familiarize you with the data from *The Swedish Bir
 
 ### Download bird data for this exercise and read them into R
 
-You can download the data for this exercise [here](https://clausrueffler.github.io/svensk-fageltaxering/bird_data_subset2023.csv). Alternatively, you can download the data as an R-data file [here](https://clausrueffler.github.io/svensk-fageltaxering/bird_data_subset2023.RDA). 
+You can download the data for this exercise as an R-data file [here](https://clausrueffler.github.io/svensk-fageltaxering/bird_data_subset2023.RDA). 
+Alternatively, you can download the data as a *.csv* [here](https://clausrueffler.github.io/svensk-fageltaxering/bird_data_subset2023.csv). 
 
 The data set that you can download here is a reduced version of the full data set, which is available [from the GBIF website](https://www.gbif.org/dataset/91fa1a0d-a208-40aa-8a6e-f2c0beb9b253).
 
-Move the downloaded *.csv* file into your project folder (working directory) and then read the data into R:
+Move the downloaded *.RDA*-file (or, alternatively, the *.csv*-file) into your project folder (working directory) and then read the data into R:
 
 ```{r, echo=T, eval=T}
-birds <- read.csv("bird_data_subset2023.csv", stringsAsFactors = FALSE)
+birds <- readRDS("bird_data_subset2023.RDA")
 
 # or
-birds <- readRDS("bird_data_subset2023.RDA")
+
+birds <- read.csv("bird_data_subset2023.csv", stringsAsFactors = FALSE)
 ```
 
 ## Trends of farmland and forest bird species
