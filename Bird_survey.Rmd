@@ -36,9 +36,11 @@ Move the downloaded *.RDA*-file (or, alternatively, the *.csv*-file) into your p
 
 ```{r, echo=T, eval=T}
 birds <- readRDS("bird_data_subset2023.RDA")
+```
 
-# or
+or
 
+```{r, echo=T, eval=T}
 birds <- read.csv("bird_data_subset2023.csv", stringsAsFactors = FALSE)
 ```
 
@@ -79,10 +81,10 @@ Let's start by looking at a quick summary of the data set in order to get a feel
 # dimension of the data frame birds
 dim(birds)
 # first three rows of the data frame birds
-head(birds, 3 )
+head(birds, 3)
 ```
 
-In this data set, each row (or, each *observation*) represents the count of a species in a given year on a given survey route.  The first row, for example, says that there was 4 individual of *Alauda arvensis* (Skylark) observed in route number 3 during the year 1998.  Here's a description of the columns:
+In this data set, each row (or, each *observation*) represents the count of a species in a given year on a given survey route.  The first row, for example, says that there were four individuals of *Alauda arvensis* (Skylark) observed on route number 3 during the year 1998.  Here's a description of the columns:
 
 * *year* gives the year of the observation
 * *species* gives the species observed
@@ -98,7 +100,9 @@ species.data <- unique(birds[ , c("species", "habitat")])
 species.data
 ```
 
-Notice, that this data frame lists first all farmland species and then all forest species. Second, to this simplified data frame, we want to add the total number of observations for each species. We use the `tapply` function to sum the counts of each species.
+Notice, that this data frame lists first all farmland species and then all forest species.
+
+Second, to this simplified data frame, we add the total number of observations for each species. We use the `tapply` function to sum the counts of each species.
 
 ```{r,  eval=T, results='hide'}
 # Sum counts for each species (over all years)
@@ -107,7 +111,7 @@ total.counts
 ```
 
 ***Warning!***
-Notice that the `total.counts` vector is in alphabetical order (this is the default behavior for `tapply` output). But the `species.data` data frame is sorted by habitat affiliation.  Thus, before we can add to total counts to the new data frame `species.data`, we have to change to order of the entries in `total.counts` to match the order of the species in `species.data`. We can do this using the `match` function.
+Notice that the `total.counts` vector is in alphabetical order (this is the default behavior for `tapply` output). But the `species.data` data frame is sorted by habitat affiliation.  Thus, before we can add the total counts to the new data frame `species.data`, we have to change to order of the entries in `total.counts` to match the order of the species in `species.data`. We can do this using the `match` function.
 
 ```{r,  eval=T}
 # We add a new column to the data frame `species.data` containing the total counts in the correct order
@@ -127,7 +131,8 @@ par(mar=c(7,4,1,1))
 # Create a bar plot of total counts per species
 barplot(species.data$total.count/1000, 
         names.arg=species.data$species,
-        las=2, col=species.data$col, 
+        las=2, col=species.data$col,
+        ylim = c(0,100),
         ylab="Total observations (x 1000)",
         cex.names=0.5)
 
@@ -157,7 +162,7 @@ That was a trivial example but hopefully you get the general idea. Let us try us
 
 ### Time series plots
 
-Next, we plot for each species the change in counts through time. In order to do this we start by creating a new data frame in which we store for each species and for each year the total count summed over all routes. We can do this using the `tapply`-function but now with respect to two factors, namely, species and year.
+Next, we plot for each species the change in counts through time. In order to do this, we start by creating a new data frame in which we store for each species and for each year the total count summed over all routes. We can do this using the `tapply`-function but now with respect to two factors, namely, species and year.
 
 ```{r eval = T, results = 'hide'}
 count.per.year <- tapply(birds$organismQuantity, list(birds$year, birds$species), sum)
@@ -220,7 +225,7 @@ Ok...what's going on? Are you surprised to see that the trends for almost all sp
 
 The general increase in total observations per species is at least partly due to the fact that the Swedish Bird Inventory added new survey routes during the first years so that the number of routes sampled per year is increasing. This is problematic for making valid comparisons between years because we are obviously likely to count more birds when we survey more routes (*think back to the lecture on* ***rarefaction***).
 
-Now let us try and correct for the different number of routes sampled per year by computing the number of counts per species per year *per survey route*.
+Now let us correct for the different number of routes sampled per year by computing the number of counts per species per year *per survey route*.
 
 ```{r, eval=F}
 # Compute the number of routes recorded for each year
@@ -233,7 +238,7 @@ par(mfcol=c(5,4), mar=c(2,4,1.5,1), oma=c(0,4,0,4))
 
 for (i in 1:ncol(count.per.year)){
   plot(1998:2021, count.per.year[ , i]/nroutes, 
-       type="l", ylab="Total Obs.", xlab=NA,
+       type="l", ylab="Obs. per Route", xlab=NA,
        col=ifelse(i %in% 1:10, "darkorange3", "forestgreen"), 
        lwd=3)
 # Last, add a title at the top of the panel with the name of the species
@@ -267,14 +272,14 @@ for (i in 1:length(unique(birds$species))){
 **Question 2**: After correcting for number of routes sampled per year, which species appears to have the most obvious increase in abundance over the survey period?  Which species appears to have the most obvious decrease in abundance over the survey period? Can you detect a general trend among farmland and forest species?
 </span>
 
-For times series like these it is common to report the data as an index relative to the count of the first year. Given the code that we have, it is easy to implement this change. All that we have to do is to divide the average number of individuals per route by the result for the first year. Let us have a look at the time series for the Skylark *Alauda arvensis*.
+For times series like these, it is common to report the data as an index relative to the count of the first year. Given the code that we have, it is easy to implement this change. All that we have to do is to divide the average number of individuals per route by the result for the first year. Let us have a look at the time series for the Skylark *Alauda arvensis*.
 
 ```{r eval=F}
 # Time series for the average number of Skylarks per standard route for each year.
 count.per.year[ , 1]/nroutes
 ```
 
-The same time series but with all data divided by the result from the first year. Note. that now the count for the first year equals 1.
+The same time series but with all data divided by the result from the first year. Note, that now the count for the first year equals 1.
 
 ```{r eval=F}
 (count.per.year[ , 1]/nroutes)/(count.per.year[1 , 1]/nroutes[1])
@@ -289,7 +294,7 @@ for (i in 1:ncol(count.per.year)){
   plot(1998:2021, (count.per.year[ , i]/nroutes)/(count.per.year[1 , i]/nroutes[1]),
        # for better comparison with the plots from Svensk Fågeltaxering we change the y-axis so that it starts at zero and is exactly as long as needed 
        ylim = c(0, max((count.per.year[ , i]/nroutes)/(count.per.year[1 , i]/nroutes[1])+0.3)), yaxs="i",
-       type="l", ylab="Total Obs.", xlab=NA,
+       type="l", ylab="Obs. per Route", xlab=NA,
        col=ifelse(i %in% 1:10, "darkorange3", "forestgreen"), 
        lwd=3)
   mtext(unique(birds$species)[i], 3, 0, cex=0.5, font=2)
@@ -298,7 +303,7 @@ for (i in 1:ncol(count.per.year)){
 
 <span style="color: purple;">
 **Question 3**: 
-Let us compare our plots with those produced by Svensk Fågeltaxering. You can find the official time series plot from Svensk Fågeltaxering [here](https://www.fageltaxering.lu.se/resultat/trender/trender-standardrutterna).
+Let us compare our plots with those produced by Svensk Fågeltaxering. You can find the official time series plot from Svensk Fågeltaxering [here](https://www.fageltaxering.lu.se/resultat/populationstrender-och-forandringar) (Scroll down to the tab *Trender för punkt- och standardrutter*).
 What do you conclude?
 </span>
 

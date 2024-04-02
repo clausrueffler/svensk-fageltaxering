@@ -37,13 +37,17 @@ for (i in 1:ncol(count.per.year)){
 }
 ```
 
-Now, we plot the time series of the arithmetic mean of the indices for farmland and forest birds.
+Let us compute the time series of the arithmetic mean of the indices for farmland and forest birds.
 
 ```{r, eval=T}
 # Compute the arithmetic mean by summing over all columns with farmland and forest birds, respectively, and then dividing by the number of species.
 farmland.arith <- rowSums(count.per.year[ , 1:10])/10
 forest.arith <- rowSums(count.per.year[ , 11:20])/10
+```
 
+And let's plot the result.
+
+```{r, eval=T}
 # Time series plots.
 plot(1998:2021, farmland.arith,
        ylim = c(0.8, max(forest.arith) + 0.1), yaxs="i",
@@ -59,7 +63,7 @@ Is it a good idea to compute arithmetic means for a multi-species index? Let us 
 
 To achieve this, we have to compute the *geometric mean* rather than the arithmetic mean. The geometric mean for our example equals $\sqrt{2*0.5} = 1$, as desired. Please read the short section on indicators in the course book by Sutherland (2006, pages 80 - 83) for a slightly longer discussion of this issue. You can download the relevant pages [here](https://clausrueffler.github.io/svensk-fageltaxering/downloads/Sutherland06Indicators.pdf).
 
-Following Box 2.19 in Sutherland (2006) it is easy to compute the geometric mean index.
+Following Box 2.19 in Sutherland (2006), it is easy to compute the geometric mean index and then plot it.
 
 ```{r eval=F}
 # Computing the geometric mean for farmland and forest birds.
