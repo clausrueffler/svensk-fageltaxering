@@ -13,7 +13,7 @@
 
 <title>Svensk Fågeltaxering</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
@@ -271,8 +271,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -280,16 +280,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -379,70 +372,119 @@ $(document).ready(function () {
 </script>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>This exercise is designed to familiarize you with the data from <em>The Swedish Bird Inventory (Svensk Fågeltaxering)</em>. On <a href="https://www.fageltaxering.lu.se/">this</a> website, you can read more about the data set (field protocol, history, etc.). A second aim is to continue improving your R-skills.</p>
+<p>This exercise is designed to familiarize you with the data from
+<em>The Swedish Bird Inventory (Svensk Fågeltaxering)</em>. On <a
+href="https://www.fageltaxering.lu.se/">this</a> website, you can read
+more about the data set (field protocol, history, etc.). A second aim is
+to continue improving your R-skills.</p>
 </div>
 <div id="getting-started" class="section level2">
 <h2>Getting started</h2>
-<div id="working-directory-project-folders-and-reading-data" class="section level3">
+<div id="working-directory-project-folders-and-reading-data"
+class="section level3">
 <h3>Working directory, Project folders, and Reading data</h3>
 <ul>
-<li>Remember that your working directory is usually the folder where your R script or R project is kept.</li>
-<li>If you place the data for today’s exercise in the same folder as the project you created for the exercises in this class, you can simply continue working in that project and the data should be available.</li>
-<li>If you are unfamiliar with R-projects <a href="https://clausrueffler.github.io/CodingWithR/Projects.html">this website</a> is a starting point to learn more.</li>
+<li>Remember that your working directory is usually the folder where
+your R script or R project is kept.</li>
+<li>If you place the data for today’s exercise in the same folder as the
+project you created for the exercises in this class, you can simply
+continue working in that project and the data should be available.</li>
+<li>If you are unfamiliar with R-projects <a
+href="https://clausrueffler.github.io/CodingWithR/Projects.html">this
+website</a> is a starting point to learn more.</li>
 </ul>
 </div>
-<div id="download-bird-data-for-this-exercise-and-read-them-into-r" class="section level3">
+<div id="download-bird-data-for-this-exercise-and-read-them-into-r"
+class="section level3">
 <h3>Download bird data for this exercise and read them into R</h3>
-<p>You can download the data for this exercise as an R-data file <a href="https://clausrueffler.github.io/svensk-fageltaxering/bird_data_subset2023.RDA">here</a>. Alternatively, you can download the data as a <em>.csv</em> <a href="https://clausrueffler.github.io/svensk-fageltaxering/bird_data_subset2023.csv">here</a>.</p>
-<p>The data set that you can download here is a reduced version of the full data set, which is available <a href="https://www.gbif.org/dataset/91fa1a0d-a208-40aa-8a6e-f2c0beb9b253">from the GBIF website</a>.</p>
-<p>Move the downloaded <em>.RDA</em>-file (or, alternatively, the <em>.csv</em>-file) into your project folder (working directory) and then read the data into R:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>birds <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;bird_data_subset2023.RDA&quot;</span>)</span></code></pre></div>
+<p>You can download the data for this exercise as an R-data file <a
+href="https://clausrueffler.github.io/svensk-fageltaxering/bird_data_subset2023.RDA">here</a>.
+Alternatively, you can download the data as a <em>.csv</em> <a
+href="https://clausrueffler.github.io/svensk-fageltaxering/bird_data_subset2023.csv">here</a>.</p>
+<p>The data set that you can download here is a reduced version of the
+full data set, which is available <a
+href="https://www.gbif.org/dataset/91fa1a0d-a208-40aa-8a6e-f2c0beb9b253">from
+the GBIF website</a>.</p>
+<p>Move the downloaded <em>.RDA</em>-file (or, alternatively, the
+<em>.csv</em>-file) into your project folder (working directory) and
+then read the data into R:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>birds <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;bird_data_subset2025.RDA&quot;</span>)</span></code></pre></div>
 <p>or</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>birds <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;bird_data_subset2023.csv&quot;</span>, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>birds <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;bird_data_subset2025.csv&quot;</span>, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 </div>
 </div>
-<div id="trends-of-farmland-and-forest-bird-species" class="section level2">
+<div id="trends-of-farmland-and-forest-bird-species"
+class="section level2">
 <h2>Trends of farmland and forest bird species</h2>
 <div id="background" class="section level3">
 <h3>Background</h3>
-<p>Below, you can find two lists of ten common bird species associated with farmlands and forest habitats, respectively. The data set we are working with has been reduced to include only the following twenty species and only a few columns with the most relevant information. <em>Click on the names to get more information on the species and to see some nice pictures!</em></p>
+<p>Below, you can find two lists of ten common bird species associated
+with farmlands and forest habitats, respectively. The data set we are
+working with has been reduced to include only the following twenty
+species and only a few columns with the most relevant information.
+<em>Click on the names to get more information on the species and to see
+some nice pictures!</em></p>
 <div id="farmland-birds" class="section level4">
 <h4>Farmland birds:</h4>
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Common_kestrel">Common Kestrel (<em>Falco tinnunculus</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Northern_lapwing">Northern Lapwing (<em>Vanellus vanellus</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Eurasian_skylark">Skylark (<em>Alauda arvensis</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Whinchat">Whinchat (<em>Saxicola rubetra</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Meadow_pipit">Meadow pipit (<em>Anthus pratensis</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Western_yellow_wagtail">Yellow wagtail (<em>Motacilla flava</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Yellowhammer">Yellowhammer (<em>Emberiza citrinella</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Eurasian_tree_sparrow">Tree sparrow (<em>Passer montanus</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Common_starling">Starling (<em>Sturnus vulgaris</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Common_whitethroat">Common whitethroat (<em>Sylvia communis</em>)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Common_kestrel">Common
+Kestrel (<em>Falco tinnunculus</em>)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Northern_lapwing">Northern
+Lapwing (<em>Vanellus vanellus</em>)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Eurasian_skylark">Skylark
+(<em>Alauda arvensis</em>)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Whinchat">Whinchat
+(<em>Saxicola rubetra</em>)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Meadow_pipit">Meadow pipit
+(<em>Anthus pratensis</em>)</a></li>
+<li><a
+href="https://en.wikipedia.org/wiki/Western_yellow_wagtail">Yellow
+wagtail (<em>Motacilla flava</em>)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Yellowhammer">Yellowhammer
+(<em>Emberiza citrinella</em>)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Eurasian_tree_sparrow">Tree
+sparrow (<em>Passer montanus</em>)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Common_starling">Starling
+(<em>Sturnus vulgaris</em>)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Common_whitethroat">Common
+whitethroat (<em>Sylvia communis</em>)</a></li>
 </ul>
 </div>
 <div id="forest-birds" class="section level4">
 <h4>Forest birds:</h4>
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Eurasian_sparrowhawk">Eurasian sparrowhawk (<em>Accipiter nisus</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Eurasian_jay">Euroasian jay (<em>Garrulus glandarius</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Great_spotted_woodpecker">Greater spotted woodpecker (<em>Dendrocopos major</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Coal_tit">Coal tit (<em>Periparus ater</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Common_redstart">Common redstart (<em>Phoenicurus phoenicurus</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Common_chiffchaff">Common chiffchaff (<em>Phylloscopus collybita</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Tree_pipit">Tree pipit (<em>Anthus trivialis</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Eurasian_siskin">Siskin (<em>Spinus spinus</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Hawfinch">Hawfinch (<em>Coccothraustes coccothraustes</em>)</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Eurasian_bullfinch">Bullfinch (<em>Pyrrhula pyrrhula</em>)</a></li>
+<li><a
+href="https://en.wikipedia.org/wiki/Eurasian_sparrowhawk">Eurasian
+sparrowhawk (<em>Accipiter nisus</em>)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Eurasian_jay">Euroasian jay
+(<em>Garrulus glandarius</em>)</a></li>
+<li><a
+href="https://en.wikipedia.org/wiki/Great_spotted_woodpecker">Greater
+spotted woodpecker (<em>Dendrocopos major</em>)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Coal_tit">Coal tit
+(<em>Periparus ater</em>)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Common_redstart">Common
+redstart (<em>Phoenicurus phoenicurus</em>)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Common_chiffchaff">Common
+chiffchaff (<em>Phylloscopus collybita</em>)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Tree_pipit">Tree pipit
+(<em>Anthus trivialis</em>)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Eurasian_siskin">Siskin
+(<em>Spinus spinus</em>)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Hawfinch">Hawfinch
+(<em>Coccothraustes coccothraustes</em>)</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Eurasian_bullfinch">Bullfinch
+(<em>Pyrrhula pyrrhula</em>)</a></li>
 </ul>
 </div>
 </div>
 <div id="exploring-the-data" class="section level3">
 <h3>Exploring the data</h3>
-<p>Let’s start by looking at a quick summary of the data set in order to get a feel for its content and structure.</p>
+<p>Let’s start by looking at a quick summary of the data set in order to
+get a feel for its content and structure.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dimension of the data frame birds</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(birds)</span></code></pre></div>
-<pre><code>## [1] 74176     7</code></pre>
+<pre><code>## [1] 80642     7</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># first three rows of the data frame birds</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(birds, <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##   year             species organismQuantity decimalLongitude decimalLatitude
@@ -453,49 +495,75 @@ $(document).ready(function () {
 ## 1          3   Farms
 ## 2          3   Farms
 ## 3          3   Farms</code></pre>
-<p>In this data set, each row (or, each <em>observation</em>) represents the count of a species in a given year on a given survey route. The first row, for example, says that there were four individuals of <em>Alauda arvensis</em> (Skylark) observed on route number 3 during the year 1998. Here’s a description of the columns:</p>
+<p>In this data set, each row (or, each <em>observation</em>) represents
+the count of a species in a given year on a given survey route. The
+first row, for example, says that there were four individuals of
+<em>Alauda arvensis</em> (Skylark) observed on route number 3 during the
+year 1998. Here’s a description of the columns:</p>
 <ul>
 <li><em>year</em> gives the year of the observation</li>
 <li><em>species</em> gives the species observed</li>
-<li><em>organismQuantity</em> gives the number of individuals observed</li>
-<li><em>decimalLongitude</em> and <em>decimalLatitude</em> give the geographic coordinates for each route (in WGS84).</li>
+<li><em>organismQuantity</em> gives the number of individuals
+observed</li>
+<li><em>decimalLongitude</em> and <em>decimalLatitude</em> give the
+geographic coordinates for each route (in WGS84).</li>
 <li><em>LocationID</em> gives the route number</li>
-<li><em>habitat</em> gives the main habitat association for the species (i.e., farmland or forest)</li>
+<li><em>habitat</em> gives the main habitat association for the species
+(i.e., farmland or forest)</li>
 </ul>
-<p>We might be interested to first get an aggregated summary of the data. For instance, let us look for each species at the total number of observations, that is, summed over all routes and over all years. To do this, we construct a <code>data.frame</code> to hold information at the species-level. We do this in two steps. First, we simplify the data frame <code>birds</code> so that it only contains two columns, <code>species</code> and <code>habitat</code>.</p>
+<p>We might be interested to first get an aggregated summary of the
+data. For instance, let us look for each species at the total number of
+observations, that is, summed over all routes and over all years. To do
+this, we construct a <code>data.frame</code> to hold information at the
+species-level. We do this in two steps. First, we simplify the data
+frame <code>birds</code> so that it only contains two columns,
+<code>species</code> and <code>habitat</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>species.data <span class="ot">&lt;-</span> <span class="fu">unique</span>(birds[ , <span class="fu">c</span>(<span class="st">&quot;species&quot;</span>, <span class="st">&quot;habitat&quot;</span>)])</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>species.data</span></code></pre></div>
-<p>Notice, that this data frame lists first all farmland species and then all forest species.</p>
-<p>Second, to this simplified data frame, we add the total number of observations for each species. We use the <code>tapply</code> function to sum the counts of each species.</p>
+<p>Notice, that this data frame lists first all farmland species and
+then all forest species.</p>
+<p>Second, to this simplified data frame, we add the total number of
+observations for each species. We use the <code>tapply</code> function
+to sum the counts of each species.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sum counts for each species (over all years)</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>total.counts <span class="ot">&lt;-</span> <span class="fu">tapply</span>(birds<span class="sc">$</span>organismQuantity, birds<span class="sc">$</span>species, sum)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>total.counts</span></code></pre></div>
-<p><strong><em>Warning!</em></strong> Notice that the <code>total.counts</code> vector is in alphabetical order (this is the default behavior for <code>tapply</code> output). But the <code>species.data</code> data frame is sorted by habitat affiliation. Thus, before we can add the total counts to the new data frame <code>species.data</code>, we have to change to order of the entries in <code>total.counts</code> to match the order of the species in <code>species.data</code>. We can do this using the <code>match</code> function.</p>
+<p><strong><em>Warning!</em></strong> Notice that the
+<code>total.counts</code> vector is in alphabetical order (this is the
+default behavior for <code>tapply</code> output). But the
+<code>species.data</code> data frame is sorted by habitat affiliation.
+Thus, before we can add the total counts to the new data frame
+<code>species.data</code>, we have to change to order of the entries in
+<code>total.counts</code> to match the order of the species in
+<code>species.data</code>. We can do this using the <code>match</code>
+function.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># We add a new column to the data frame `species.data` containing the total counts in the correct order</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>species.data<span class="sc">$</span>total.count <span class="ot">&lt;-</span> total.counts[<span class="fu">match</span>(species.data<span class="sc">$</span>species, <span class="fu">names</span>(total.counts))]</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>species.data</span></code></pre></div>
 <pre><code>##                             species habitat total.count
-## 1                   Alauda arvensis   Farms       30002
-## 2                  Anthus pratensis   Farms       31141
-## 3               Emberiza citrinella   Farms       34165
-## 4                  Sturnus vulgaris   Farms       57801
-## 5                   Sylvia communis   Farms       18044
-## 9                 Falco tinnunculus   Farms        1009
-## 10                  Passer montanus   Farms       13302
-## 13                Vanellus vanellus   Farms       14325
-## 16                 Saxicola rubetra   Farms       12850
-## 28                  Motacilla flava   Farms       14669
-## 29187               Accipiter nisus   Woods         536
-## 29188              Anthus trivialis   Woods       98580
-## 29189       Phoenicurus phoenicurus   Woods       36095
-## 29190                 Spinus spinus   Woods       84538
-## 29192             Dendrocopos major   Woods       21318
-## 29193           Garrulus glandarius   Woods        9040
-## 29194                Periparus ater   Woods        9948
-## 29210 Coccothraustes coccothraustes   Woods        1396
-## 29237             Pyrrhula pyrrhula   Woods        6234
-## 29239        Phylloscopus collybita   Woods       13296</code></pre>
-<p>Convince yourself that this produces the desired result. Let us visualize the total counts in a bar plot where the species are ordered by habitat affiliation.</p>
+## 1                   Alauda arvensis   Farms       33134
+## 2                  Anthus pratensis   Farms       34186
+## 3               Emberiza citrinella   Farms       36228
+## 4                  Sturnus vulgaris   Farms       61045
+## 5                   Sylvia communis   Farms       19804
+## 9                 Falco tinnunculus   Farms        1106
+## 10                  Passer montanus   Farms       14218
+## 13                Vanellus vanellus   Farms       15100
+## 16                 Saxicola rubetra   Farms       13950
+## 28                  Motacilla flava   Farms       15955
+## 31526               Accipiter nisus   Woods         569
+## 31527              Anthus trivialis   Woods      106586
+## 31528       Phoenicurus phoenicurus   Woods       38707
+## 31529                 Spinus spinus   Woods       91533
+## 31531             Dendrocopos major   Woods       24161
+## 31532           Garrulus glandarius   Woods        9725
+## 31533                Periparus ater   Woods       10949
+## 31549 Coccothraustes coccothraustes   Woods        1621
+## 31576             Pyrrhula pyrrhula   Woods        7115
+## 31578        Phylloscopus collybita   Woods       15810</code></pre>
+<p>Convince yourself that this produces the desired result. Let us
+visualize the total counts in a bar plot where the species are ordered
+by habitat affiliation.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a vector of colors for plotting</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>species.data<span class="sc">$</span>col <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(species.data<span class="sc">$</span>habitat <span class="sc">%in%</span> <span class="st">&quot;Farms&quot;</span>, <span class="st">&quot;darkorange3&quot;</span>, <span class="st">&quot;forestgreen&quot;</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -515,7 +583,8 @@ $(document).ready(function () {
 <span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch=</span><span class="dv">22</span>, <span class="at">pt.bg=</span><span class="fu">c</span>(<span class="st">&quot;darkorange3&quot;</span>, <span class="st">&quot;forestgreen&quot;</span>),</span>
 <span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">bty=</span><span class="st">&quot;n&quot;</span>, <span class="at">pt.cex=</span><span class="dv">2</span>)</span></code></pre></div>
 <p><img src="Bird_survey_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<p><span style="color: purple;"> <strong>Question 1</strong>: Please write down two conclusions you can make from this figure. </span></p>
+<p><span style="color: purple;"> <strong>Question 1</strong>: Please
+write down two conclusions you can make from this figure. </span></p>
 <!---
 Next, we plot for each species the change in counts through time. To do so, we will use a programming tool called a `for loop`. *For loops* are iterative operations that loop over a program by using an index. If you are unfamiliar with *for loops* you can find a brief introduction [here](https://clausrueffler.github.io/CodingWithR/Scripting.html). It is probably easiest to digest with a simple example.
 
@@ -533,22 +602,34 @@ That was a trivial example but hopefully you get the general idea. Let us try us
 </div>
 <div id="time-series-plots" class="section level3">
 <h3>Time series plots</h3>
-<p>Next, we plot for each species the change in counts through time. In order to do this, we start by creating a new data frame in which we store for each species and for each year the total count summed over all routes. We can do this using the <code>tapply</code>-function but now with respect to two factors, namely, species and year.</p>
+<p>Next, we plot for each species the change in counts through time. In
+order to do this, we start by creating a new data frame in which we
+store for each species and for each year the total count summed over all
+routes. We can do this using the <code>tapply</code>-function but now
+with respect to two factors, namely, species and year.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>count.per.year <span class="ot">&lt;-</span> <span class="fu">tapply</span>(birds<span class="sc">$</span>organismQuantity, <span class="fu">list</span>(birds<span class="sc">$</span>year, birds<span class="sc">$</span>species), sum)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Convince yourself that this gives the desired result.</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(count.per.year, <span class="dv">3</span>)</span></code></pre></div>
-<p>Note, that again these counts are arranged alphabetically with respect to species names. We can use the same trick as above to rearrange the order so as to match the original order we use in the data frame <code>species.data</code>.</p>
+<p>Note, that again these counts are arranged alphabetically with
+respect to species names. We can use the same trick as above to
+rearrange the order so as to match the original order we use in the data
+frame <code>species.data</code>.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>count.per.year <span class="ot">&lt;-</span> count.per.year[ , <span class="fu">c</span>(<span class="fu">match</span>(species.data<span class="sc">$</span>species, <span class="fu">names</span>(total.counts)))]</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Let us inspect whether the data look as intended.</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(count.per.year, <span class="dv">3</span>)</span></code></pre></div>
-<p>Now we are ready to plot for each species the time series. To do so, we use a programming tool called a <code>for loop</code>. <em>For loops</em> are iterative operations that loop over a program by using an index. If you are unfamiliar with <em>for loops</em> you can find a brief introduction <a href="https://clausrueffler.github.io/CodingWithR/Scripting.html">here</a>.</p>
+<p>Now we are ready to plot for each species the time series. To do so,
+we use a programming tool called a <code>for loop</code>. <em>For
+loops</em> are iterative operations that loop over a program by using an
+index. If you are unfamiliar with <em>for loops</em> you can find a
+brief introduction <a
+href="https://clausrueffler.github.io/CodingWithR/Scripting.html">here</a>.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First set the layout and margins of the figure</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfcol=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">4</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="fl">1.5</span>,<span class="dv">1</span>), <span class="at">oma=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">0</span>,<span class="dv">4</span>))</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(count.per.year)){<span class="co"># this for-loop iteratively produces the plot for the different species by cycling through the columns of the data frame `count.per.year`.</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="dv">1998</span><span class="sc">:</span><span class="dv">2021</span>, count.per.year[ , i], </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="dv">1998</span><span class="sc">:</span><span class="dv">2023</span>, count.per.year[ , i], </span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Total Obs.&quot;</span>, <span class="at">xlab=</span><span class="cn">NA</span>,</span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="fu">ifelse</span>(i <span class="sc">%in%</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="st">&quot;darkorange3&quot;</span>, <span class="st">&quot;forestgreen&quot;</span>), </span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd=</span><span class="dv">3</span>)</span>
@@ -583,9 +664,19 @@ for (i in 1:length(unique(birds$species))){
 
 <img src="Bird_survey_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 --->
-<p>Ok…what’s going on? Are you surprised to see that the trends for almost all species appear to be increasing? Are birds really taking over Sweden?!? No, unfortunately not…</p>
-<p>The general increase in total observations per species is at least partly due to the fact that the Swedish Bird Inventory added new survey routes during the first years so that the number of routes sampled per year is increasing. This is problematic for making valid comparisons between years because we are obviously likely to count more birds when we survey more routes (<em>think back to the lecture on</em> <strong><em>rarefaction</em></strong>).</p>
-<p>Now let us correct for the different number of routes sampled per year by computing the number of counts per species per year <em>per survey route</em>.</p>
+<p>Ok…what’s going on? Are you surprised to see that the trends for
+almost all species appear to be increasing? Are birds really taking over
+Sweden?!? No, unfortunately not…</p>
+<p>The general increase in total observations per species is at least
+partly due to the fact that the Swedish Bird Inventory added new survey
+routes during the first years so that the number of routes sampled per
+year is increasing. This is problematic for making valid comparisons
+between years because we are obviously likely to count more birds when
+we survey more routes (<em>think back to the lecture on</em>
+<strong><em>rarefaction</em></strong>).</p>
+<p>Now let us correct for the different number of routes sampled per
+year by computing the number of counts per species per year <em>per
+survey route</em>.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the number of routes recorded for each year</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>nroutes <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">table</span>(birds<span class="sc">$</span>LocationID, birds<span class="sc">$</span>year) <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -595,7 +686,7 @@ for (i in 1:length(unique(birds$species))){
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfcol=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">4</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="fl">1.5</span>,<span class="dv">1</span>), <span class="at">oma=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">0</span>,<span class="dv">4</span>))</span>
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(count.per.year)){</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="dv">1998</span><span class="sc">:</span><span class="dv">2021</span>, count.per.year[ , i]<span class="sc">/</span>nroutes, </span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="dv">1998</span><span class="sc">:</span><span class="dv">2023</span>, count.per.year[ , i]<span class="sc">/</span>nroutes, </span>
 <span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Obs. per Route&quot;</span>, <span class="at">xlab=</span><span class="cn">NA</span>,</span>
 <span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="fu">ifelse</span>(i <span class="sc">%in%</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="st">&quot;darkorange3&quot;</span>, <span class="st">&quot;forestgreen&quot;</span>), </span>
 <span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd=</span><span class="dv">3</span>)</span>
@@ -626,17 +717,29 @@ for (i in 1:length(unique(birds$species))){
 
 <img src="Bird_survey_files/figure-html/unnamed-chunk-14-1.png" width="672" />
 --->
-<p><span style="color: purple;"> <strong>Question 2</strong>: After correcting for number of routes sampled per year, which species appears to have the most obvious increase in abundance over the survey period? Which species appears to have the most obvious decrease in abundance over the survey period? Can you detect a general trend among farmland and forest species? </span></p>
-<p>For times series like these, it is common to report the data as an index relative to the count of the first year. Given the code that we have, it is easy to implement this change. All that we have to do is to divide the average number of individuals per route by the result for the first year. Let us have a look at the time series for the Skylark <em>Alauda arvensis</em>.</p>
+<p><span style="color: purple;"> <strong>Question 2</strong>: After
+correcting for number of routes sampled per year, which species appears
+to have the most obvious increase in abundance over the survey period?
+Which species appears to have the most obvious decrease in abundance
+over the survey period? Can you detect a general trend among farmland
+and forest species? </span></p>
+<p>For times series like these, it is common to report the data as an
+index relative to the count of the first year. Given the code that we
+have, it is easy to implement this change. All that we have to do is to
+divide the average number of individuals per route by the result for the
+first year. Let us have a look at the time series for the Skylark
+<em>Alauda arvensis</em>.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Time series for the average number of Skylarks per standard route for each year.</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>count.per.year[ , <span class="dv">1</span>]<span class="sc">/</span>nroutes</span></code></pre></div>
-<p>The same time series but with all data divided by the result from the first year. Note, that now the count for the first year equals 1.</p>
+<p>The same time series but with all data divided by the result from the
+first year. Note, that now the count for the first year equals 1.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>(count.per.year[ , <span class="dv">1</span>]<span class="sc">/</span>nroutes)<span class="sc">/</span>(count.per.year[<span class="dv">1</span> , <span class="dv">1</span>]<span class="sc">/</span>nroutes[<span class="dv">1</span>])</span></code></pre></div>
-<p>With this small modification our time series plots can be computed as follows.</p>
+<p>With this small modification our time series plots can be computed as
+follows.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfcol=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">4</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="fl">1.5</span>,<span class="dv">1</span>), <span class="at">oma=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">0</span>,<span class="dv">4</span>))</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(count.per.year)){</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="dv">1998</span><span class="sc">:</span><span class="dv">2021</span>, (count.per.year[ , i]<span class="sc">/</span>nroutes)<span class="sc">/</span>(count.per.year[<span class="dv">1</span> , i]<span class="sc">/</span>nroutes[<span class="dv">1</span>]),</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="dv">1998</span><span class="sc">:</span><span class="dv">2023</span>, (count.per.year[ , i]<span class="sc">/</span>nroutes)<span class="sc">/</span>(count.per.year[<span class="dv">1</span> , i]<span class="sc">/</span>nroutes[<span class="dv">1</span>]),</span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>       <span class="co"># for better comparison with the plots from Svensk Fågeltaxering we change the y-axis so that it starts at zero and is exactly as long as needed </span></span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>((count.per.year[ , i]<span class="sc">/</span>nroutes)<span class="sc">/</span>(count.per.year[<span class="dv">1</span> , i]<span class="sc">/</span>nroutes[<span class="dv">1</span>])<span class="sc">+</span><span class="fl">0.3</span>)), <span class="at">yaxs=</span><span class="st">&quot;i&quot;</span>,</span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Obs. per Route&quot;</span>, <span class="at">xlab=</span><span class="cn">NA</span>,</span>
@@ -644,7 +747,12 @@ for (i in 1:length(unique(birds$species))){
 <span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd=</span><span class="dv">3</span>)</span>
 <span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mtext</span>(<span class="fu">unique</span>(birds<span class="sc">$</span>species)[i], <span class="dv">3</span>, <span class="dv">0</span>, <span class="at">cex=</span><span class="fl">0.5</span>, <span class="at">font=</span><span class="dv">2</span>)</span>
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p><span style="color: purple;"> <strong>Question 3</strong>: Let us compare our plots with those produced by Svensk Fågeltaxering. You can find the official time series plot from Svensk Fågeltaxering <a href="https://www.fageltaxering.lu.se/resultat/populationstrender-och-forandringar">here</a> (Scroll down to the tab <em>Trender för punkt- och standardrutter</em>). What do you conclude? </span></p>
+<p><span style="color: purple;"> <strong>Question 3</strong>: Let us
+compare our plots with those produced by Svensk Fågeltaxering. You can
+find the official time series plot from Svensk Fågeltaxering <a
+href="https://www.fageltaxering.lu.se/resultat/populationstrender-och-forandringar">here</a>
+(Scroll down to the tab <em>Trender för punkt- och standardrutter</em>).
+What do you conclude? </span></p>
 </div>
 </div>
 

@@ -49,11 +49,11 @@ And let's plot the result.
 
 ```{r, eval=T}
 # Time series plots.
-plot(1998:2021, farmland.arith,
+plot(1998:2023, farmland.arith,
        ylim = c(0.8, max(forest.arith) + 0.1), yaxs="i",
        type="l", ylab="arithmetic mean index", xlab=NA,
        col= "darkorange3", lwd=3)
-lines(1998:2021, forest.arith,
+lines(1998:2023, forest.arith,
        type="l", ylab="arithmetic mean index", xlab=NA,
        col= "forestgreen", lwd=3)
 legend("top", legend = c("Farmland","Forest"), col= c("darkorange3", "forestgreen"), lty = 1, lwd = 3)
@@ -70,11 +70,11 @@ Following Box 2.19 in Sutherland (2006), it is easy to compute the geometric mea
 farmland.geom <- exp(rowMeans(log(index[ , 1:10])))
 forest.geom <- exp(rowMeans(log(index[ , 11:20])))
 
-plot(1998:2021, farmland.geom,
+plot(1998:2023, farmland.geom,
      ylim = c(0.8, max(forest.geom) + 0.1), yaxs="i", 
      ylab="geometric mean index", xlab=NA,
      type="l", col= "darkorange3", lwd=3)
-lines(1998:2021, forest.geom,
+lines(1998:2023, forest.geom,
        type="l", col= "forestgreen", lwd=3)
 legend("top", legend = c("Farmland","Forest"), col= c("darkorange3", "forestgreen"), lty = 1, lwd = 3) 
 ```

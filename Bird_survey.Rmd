@@ -35,13 +35,13 @@ The data set that you can download here is a reduced version of the full data se
 Move the downloaded *.RDA*-file (or, alternatively, the *.csv*-file) into your project folder (working directory) and then read the data into R:
 
 ```{r, echo=T, eval=T}
-birds <- readRDS("bird_data_subset2023.RDA")
+birds <- readRDS("bird_data_subset2025.RDA")
 ```
 
 or
 
 ```{r, echo=T, eval=T}
-birds <- read.csv("bird_data_subset2023.csv", stringsAsFactors = FALSE)
+birds <- read.csv("bird_data_subset2025.csv", stringsAsFactors = FALSE)
 ```
 
 ## Trends of farmland and forest bird species
@@ -187,7 +187,7 @@ Now we are ready to plot for each species the time series. To do so, we use a pr
 par(mfcol=c(5,4), mar=c(2,4,1.5,1), oma=c(0,4,0,4))
 
 for (i in 1:ncol(count.per.year)){# this for-loop iteratively produces the plot for the different species by cycling through the columns of the data frame `count.per.year`.
-  plot(1998:2021, count.per.year[ , i], 
+  plot(1998:2023, count.per.year[ , i], 
        type="l", ylab="Total Obs.", xlab=NA,
        col=ifelse(i %in% 1:10, "darkorange3", "forestgreen"), 
        lwd=3)
@@ -237,7 +237,7 @@ nroutes <- colSums(table(birds$LocationID, birds$year) > 0)
 par(mfcol=c(5,4), mar=c(2,4,1.5,1), oma=c(0,4,0,4))
 
 for (i in 1:ncol(count.per.year)){
-  plot(1998:2021, count.per.year[ , i]/nroutes, 
+  plot(1998:2023, count.per.year[ , i]/nroutes, 
        type="l", ylab="Obs. per Route", xlab=NA,
        col=ifelse(i %in% 1:10, "darkorange3", "forestgreen"), 
        lwd=3)
@@ -291,7 +291,7 @@ With this small modification our time series plots can be computed as follows.
 par(mfcol=c(5,4), mar=c(2,4,1.5,1), oma=c(0,4,0,4))
 
 for (i in 1:ncol(count.per.year)){
-  plot(1998:2021, (count.per.year[ , i]/nroutes)/(count.per.year[1 , i]/nroutes[1]),
+  plot(1998:2023, (count.per.year[ , i]/nroutes)/(count.per.year[1 , i]/nroutes[1]),
        # for better comparison with the plots from Svensk Fågeltaxering we change the y-axis so that it starts at zero and is exactly as long as needed 
        ylim = c(0, max((count.per.year[ , i]/nroutes)/(count.per.year[1 , i]/nroutes[1])+0.3)), yaxs="i",
        type="l", ylab="Obs. per Route", xlab=NA,
