@@ -27,8 +27,8 @@ This exercise is designed to familiarize you with the data from *The Swedish Bir
 
 ### Download bird data for this exercise and read them into R
 
-You can download the data for this exercise as an R-data file [here](https://clausrueffler.github.io/svensk-fageltaxering/bird_data_subset2023.RDA). 
-Alternatively, you can download the data as a *.csv* [here](https://clausrueffler.github.io/svensk-fageltaxering/bird_data_subset2023.csv). 
+You can download the data for this exercise as an R-data file [here](https://clausrueffler.github.io/svensk-fageltaxering/bird_data_subset2025.RDA). 
+Alternatively, you can download the data as a *.csv* [here](https://clausrueffler.github.io/svensk-fageltaxering/bird_data_subset2025.csv). 
 
 The data set that you can download here is a reduced version of the full data set, which is available [from the GBIF website](https://www.gbif.org/dataset/91fa1a0d-a208-40aa-8a6e-f2c0beb9b253).
 
