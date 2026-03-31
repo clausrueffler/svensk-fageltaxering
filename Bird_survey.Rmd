@@ -272,7 +272,7 @@ for (i in 1:length(unique(birds$species))){
 **Question 2**: After correcting for number of routes sampled per year, which species show the most obvious increase in abundance over the survey period?  And which species show the most obvious decrease in abundance over the survey period? Can you detect a general trend among farmland and forest species?
 </span>
 
-For times series like these, it is common to report the data as an index relative to the count of the first year. Given the code that we have, it is easy to implement this change. All that we have to do is to divide the average number of individuals per route by the result for the first year. Let us have a look at the time series for the Skylark *Alauda arvensis*.
+For times series like these, it is common to report the data as an index relative to the count of the first year. Given the code that we have, it is easy to implement this change. All that we have to do is to divide the average number of individuals per route by the number counted in the first year. Let us have a look at the time series for the Skylark *Alauda arvensis*.
 
 ```{r eval=F}
 # Time series for the average number of Skylarks per standard route for each year.
