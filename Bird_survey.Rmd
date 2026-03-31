@@ -16,14 +16,14 @@ klippy::klippy(position = c('top', 'right'))
 
 ## Introduction
 
-This exercise is designed to familiarize you with the data from *The Swedish Bird Inventory (Svensk Fågeltaxering)*. On [this](https://www.fageltaxering.lu.se/) website, you can read more about the data set (field protocol, history, etc.). A second aim is to continue improving your R-skills.
+In this exercise you analyze some data from *The Swedish Bird Inventory (Svensk Fågeltaxering)*. On [this](https://www.fageltaxering.lu.se/) website, you can read more about the data set (field protocol, history, etc.). A second aim is to continue improving your R-skills. Note that this exercise consists of **two** tabs.
 
 ## Getting started
 ### Working directory, Project folders, and Reading data
 
 * Remember that your working directory is usually the folder where your R script or R project is kept.
 * If you place the data for today's exercise in the same folder as the project you created for the exercises in this class, you can simply continue working in that project and the data should be available.
-* If you are unfamiliar with R-projects [this website](https://clausrueffler.github.io/CodingWithR/Projects.html) is a starting point to learn more.
+* If you are unfamiliar with R-projects, [this website](https://clausrueffler.github.io/CodingWithR/Projects.html) is a starting point to learn more.
 
 ### Download bird data for this exercise and read them into R
 
@@ -47,7 +47,7 @@ birds <- read.csv("bird_data_subset2025.csv", stringsAsFactors = FALSE)
 ## Trends of farmland and forest bird species
 ### Background
 
-Below, you can find two lists of ten common bird species associated with farmlands and forest habitats, respectively. The data set we are working with has been reduced to include only the following twenty species and only a few columns with the most relevant information. *Click on the names to get more information on the species and to see some nice pictures!*
+Below, you can find a list of ten common bird species associated with farmland and forest habitats, respectively. The data set we are working with has been reduced to include only the following twenty species and only a few columns with the most relevant information. *Click on the names to get more information on the species and to see some nice pictures!*
 
 #### Farmland birds:
 * [Common Kestrel (*Falco tinnunculus*)](https://en.wikipedia.org/wiki/Common_kestrel)
@@ -78,9 +78,9 @@ Below, you can find two lists of ten common bird species associated with farmlan
 Let's start by looking at a quick summary of the data set in order to get a feel for its content and structure.
 
 ```{r,  eval=T}
-# dimension of the data frame birds
+# dimension of the data frame "birds" (number of rows and columns)
 dim(birds)
-# first three rows of the data frame birds
+# first three rows of the data frame "birds"
 head(birds, 3)
 ```
 
@@ -183,7 +183,7 @@ head(count.per.year, 3)
 Now we are ready to plot for each species the time series. To do so, we use a programming tool called a `for loop`. *For loops* are iterative operations that loop over a program by using an index. If you are unfamiliar with *for loops* you can find a brief introduction [here](https://clausrueffler.github.io/CodingWithR/Scripting.html).
 
 ```{r}
-# First set the layout and margins of the figure
+# set the layout and margins of the figure
 par(mfcol=c(5,4), mar=c(2,4,1.5,1), oma=c(0,4,0,4))
 
 for (i in 1:ncol(count.per.year)){# this for-loop iteratively produces the plot for the different species by cycling through the columns of the data frame `count.per.year`.
@@ -221,9 +221,9 @@ for (i in 1:length(unique(birds$species))){
 ```
 --->
 
-Ok...what's going on? Are you surprised to see that the trends for almost all species appear to be increasing?  Are birds really taking over Sweden?!?  No, unfortunately not...
+Let us have a look at these graphs. Hm, it seems that most species tend to increase... Do you think that this is indeed true? And if you do not think so, what could be the reason for the trends shown in the graphs?
 
-The general increase in total observations per species is at least partly due to the fact that the Swedish Bird Inventory added new survey routes during the first years so that the number of routes sampled per year is increasing. This is problematic for making valid comparisons between years because we are obviously likely to count more birds when we survey more routes (*think back to the lecture on* ***rarefaction***).
+The general increase in total observations per species is at least partly due to the fact that the Swedish Bird Inventory added new survey routes during the first years. In the lecture you saw a graph showing that during the first ten years, the number of routes counted steadily increased from one year to the next. This is problematic for making valid comparisons between years because we are obviously likely to count more birds when we survey more routes (*think back to the lecture on* ***rarefaction***).
 
 Now let us correct for the different number of routes sampled per year by computing the number of counts per species per year *per survey route*.
 
@@ -233,7 +233,7 @@ nroutes <- colSums(table(birds$LocationID, birds$year) > 0)
 
 # Let's redo the figure by dividing the number of observations 
 # per species per year by the number of routes surveyed each year.
-# First set the layout and margins of the figure.
+# First, set the layout and margins of the figure.
 par(mfcol=c(5,4), mar=c(2,4,1.5,1), oma=c(0,4,0,4))
 
 for (i in 1:ncol(count.per.year)){
@@ -269,7 +269,7 @@ for (i in 1:length(unique(birds$species))){
 --->
 
 <span style="color: purple;">
-**Question 2**: After correcting for number of routes sampled per year, which species appears to have the most obvious increase in abundance over the survey period?  Which species appears to have the most obvious decrease in abundance over the survey period? Can you detect a general trend among farmland and forest species?
+**Question 2**: After correcting for number of routes sampled per year, which species show the most obvious increase in abundance over the survey period?  And which species show the most obvious decrease in abundance over the survey period? Can you detect a general trend among farmland and forest species?
 </span>
 
 For times series like these, it is common to report the data as an index relative to the count of the first year. Given the code that we have, it is easy to implement this change. All that we have to do is to divide the average number of individuals per route by the result for the first year. Let us have a look at the time series for the Skylark *Alauda arvensis*.
@@ -303,7 +303,7 @@ for (i in 1:ncol(count.per.year)){
 
 <span style="color: purple;">
 **Question 3**: 
-Let us compare our plots with those produced by Svensk Fågeltaxering. You can find the official time series plot from Svensk Fågeltaxering [here](https://www.fageltaxering.lu.se/resultat/populationstrender-och-forandringar) (Scroll down to the tab *Trender för punkt- och standardrutter*).
+Let us compare our plots with those produced by Svensk Fågeltaxering. You can find the official time series plot from Svensk Fågeltaxering [here](https://www.fageltaxering.lu.se/resultat/populationstrender-och-forandringar) (Scroll down to the tab *Trender för punkt- och standardrutter*). Note that the species on this website are in taxonomic order, not alphabetic order.
 What do you conclude?
 </span>
 

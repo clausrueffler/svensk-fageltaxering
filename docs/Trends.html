@@ -412,15 +412,15 @@ for farmland and forest birds.</p>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span> <span class="st">&quot;forestgreen&quot;</span>, <span class="at">lwd=</span><span class="dv">3</span>)</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;top&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Farmland&quot;</span>,<span class="st">&quot;Forest&quot;</span>), <span class="at">col=</span> <span class="fu">c</span>(<span class="st">&quot;darkorange3&quot;</span>, <span class="st">&quot;forestgreen&quot;</span>), <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span></code></pre></div>
 <p><img src="Trends_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
-<p>Is it a good idea to compute arithmetic means for a multi-species
-index? Let us do a little thought experiment. Consider two species. The
-population of the first one doubles from one year to the next, that is,
-it has an index of 2 in the second year. The population of the second
-one halves, it has an index of 0.5 in the second year. The arithmetic
-mean equals <span class="math inline">\((2 + 0.5)/2 = 1.25\)</span>,
-suggesting a positive trend on average. It should be clear that this is
-misleading: the effects of one population doubling and the one halving
-should cancel out each other!</p>
+<p>But is it really a good idea to compute arithmetic means for a
+multi-species index? Let us do a little thought experiment. Consider two
+species. The population of the first one doubles from one year to the
+next, that is, it has an index of 2 in the second year. The population
+of the second one halves, it has an index of 0.5 in the second year. The
+arithmetic mean equals <span class="math inline">\((2 + 0.5)/2 =
+1.25\)</span>, suggesting a positive trend on average. It should be
+clear that this is misleading: the effects of one population doubling
+and the one halving should cancel out each other!</p>
 <p>To achieve this, we have to compute the <em>geometric mean</em>
 rather than the arithmetic mean. The geometric mean for our example
 equals <span class="math inline">\(\sqrt{2*0.5} = 1\)</span>, as
@@ -442,7 +442,7 @@ geometric mean index and then plot it.</p>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">type=</span><span class="st">&quot;l&quot;</span>, <span class="at">col=</span> <span class="st">&quot;forestgreen&quot;</span>, <span class="at">lwd=</span><span class="dv">3</span>)</span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;top&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Farmland&quot;</span>,<span class="st">&quot;Forest&quot;</span>), <span class="at">col=</span> <span class="fu">c</span>(<span class="st">&quot;darkorange3&quot;</span>, <span class="st">&quot;forestgreen&quot;</span>), <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">3</span>) </span></code></pre></div>
 <p><span style="color: purple;"> <strong>Question 4</strong>: What are
-two conclusions you can make from this figure? For farmland birds
+two conclusions you can make from this figure? For farmland birds,
 compare your result with the official Swedish data that you can find <a
 href="https://www.sverigesmiljomal.se/miljomalen/ett-rikt-odlingslandskap/faglar-och-fjarilar/">here</a>.
 If your results, differ from those on this website, what could be the

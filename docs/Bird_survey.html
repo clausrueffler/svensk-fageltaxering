@@ -372,11 +372,12 @@ $(document).ready(function () {
 </script>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p>This exercise is designed to familiarize you with the data from
-<em>The Swedish Bird Inventory (Svensk Fågeltaxering)</em>. On <a
+<p>In this exercise you analyze some data from <em>The Swedish Bird
+Inventory (Svensk Fågeltaxering)</em>. On <a
 href="https://www.fageltaxering.lu.se/">this</a> website, you can read
 more about the data set (field protocol, history, etc.). A second aim is
-to continue improving your R-skills.</p>
+to continue improving your R-skills. Note that this exercise consists of
+<strong>two</strong> tabs.</p>
 </div>
 <div id="getting-started" class="section level2">
 <h2>Getting started</h2>
@@ -389,7 +390,7 @@ your R script or R project is kept.</li>
 <li>If you place the data for today’s exercise in the same folder as the
 project you created for the exercises in this class, you can simply
 continue working in that project and the data should be available.</li>
-<li>If you are unfamiliar with R-projects <a
+<li>If you are unfamiliar with R-projects, <a
 href="https://clausrueffler.github.io/CodingWithR/Projects.html">this
 website</a> is a starting point to learn more.</li>
 </ul>
@@ -418,12 +419,12 @@ class="section level2">
 <h2>Trends of farmland and forest bird species</h2>
 <div id="background" class="section level3">
 <h3>Background</h3>
-<p>Below, you can find two lists of ten common bird species associated
-with farmlands and forest habitats, respectively. The data set we are
-working with has been reduced to include only the following twenty
-species and only a few columns with the most relevant information.
-<em>Click on the names to get more information on the species and to see
-some nice pictures!</em></p>
+<p>Below, you can find a list of ten common bird species associated with
+farmland and forest habitats, respectively. The data set we are working
+with has been reduced to include only the following twenty species and
+only a few columns with the most relevant information. <em>Click on the
+names to get more information on the species and to see some nice
+pictures!</em></p>
 <div id="farmland-birds" class="section level4">
 <h4>Farmland birds:</h4>
 <ul>
@@ -482,10 +483,10 @@ chiffchaff (<em>Phylloscopus collybita</em>)</a></li>
 <h3>Exploring the data</h3>
 <p>Let’s start by looking at a quick summary of the data set in order to
 get a feel for its content and structure.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dimension of the data frame birds</span></span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># dimension of the data frame &quot;birds&quot; (number of rows and columns)</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(birds)</span></code></pre></div>
 <pre><code>## [1] 80642     7</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># first three rows of the data frame birds</span></span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># first three rows of the data frame &quot;birds&quot;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(birds, <span class="dv">3</span>)</span></code></pre></div>
 <pre><code>##   year             species organismQuantity decimalLongitude decimalLatitude
 ## 1 1998     Alauda arvensis                4          11.3098         58.4315
@@ -625,7 +626,7 @@ loops</em> are iterative operations that loop over a program by using an
 index. If you are unfamiliar with <em>for loops</em> you can find a
 brief introduction <a
 href="https://clausrueffler.github.io/CodingWithR/Scripting.html">here</a>.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First set the layout and margins of the figure</span></span>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set the layout and margins of the figure</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfcol=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">4</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="fl">1.5</span>,<span class="dv">1</span>), <span class="at">oma=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">0</span>,<span class="dv">4</span>))</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(count.per.year)){<span class="co"># this for-loop iteratively produces the plot for the different species by cycling through the columns of the data frame `count.per.year`.</span></span>
@@ -664,16 +665,18 @@ for (i in 1:length(unique(birds$species))){
 
 <img src="Bird_survey_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 --->
-<p>Ok…what’s going on? Are you surprised to see that the trends for
-almost all species appear to be increasing? Are birds really taking over
-Sweden?!? No, unfortunately not…</p>
+<p>Let us have a look at these graphs. Hm, it seems that most species
+tend to increase… Do you think that this is indeed true? And if you do
+not think so, what could be the reason for the trends shown in the
+graphs?</p>
 <p>The general increase in total observations per species is at least
 partly due to the fact that the Swedish Bird Inventory added new survey
-routes during the first years so that the number of routes sampled per
-year is increasing. This is problematic for making valid comparisons
-between years because we are obviously likely to count more birds when
-we survey more routes (<em>think back to the lecture on</em>
-<strong><em>rarefaction</em></strong>).</p>
+routes during the first years. In the lecture you saw a graph showing
+that during the first ten years, the number of routes counted steadily
+increased from one year to the next. This is problematic for making
+valid comparisons between years because we are obviously likely to count
+more birds when we survey more routes (<em>think back to the lecture
+on</em> <strong><em>rarefaction</em></strong>).</p>
 <p>Now let us correct for the different number of routes sampled per
 year by computing the number of counts per species per year <em>per
 survey route</em>.</p>
@@ -682,7 +685,7 @@ survey route</em>.</p>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Let&#39;s redo the figure by dividing the number of observations </span></span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># per species per year by the number of routes surveyed each year.</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># First set the layout and margins of the figure.</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># First, set the layout and margins of the figure.</span></span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfcol=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">4</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="fl">1.5</span>,<span class="dv">1</span>), <span class="at">oma=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">4</span>,<span class="dv">0</span>,<span class="dv">4</span>))</span>
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(count.per.year)){</span>
@@ -718,11 +721,11 @@ for (i in 1:length(unique(birds$species))){
 <img src="Bird_survey_files/figure-html/unnamed-chunk-14-1.png" width="672" />
 --->
 <p><span style="color: purple;"> <strong>Question 2</strong>: After
-correcting for number of routes sampled per year, which species appears
-to have the most obvious increase in abundance over the survey period?
-Which species appears to have the most obvious decrease in abundance
-over the survey period? Can you detect a general trend among farmland
-and forest species? </span></p>
+correcting for number of routes sampled per year, which species show the
+most obvious increase in abundance over the survey period? And which
+species show the most obvious decrease in abundance over the survey
+period? Can you detect a general trend among farmland and forest
+species? </span></p>
 <p>For times series like these, it is common to report the data as an
 index relative to the count of the first year. Given the code that we
 have, it is easy to implement this change. All that we have to do is to
@@ -752,7 +755,8 @@ compare our plots with those produced by Svensk Fågeltaxering. You can
 find the official time series plot from Svensk Fågeltaxering <a
 href="https://www.fageltaxering.lu.se/resultat/populationstrender-och-forandringar">here</a>
 (Scroll down to the tab <em>Trender för punkt- och standardrutter</em>).
-What do you conclude? </span></p>
+Note that the species on this website are in taxonomic order, not
+alphabetic order. What do you conclude? </span></p>
 </div>
 </div>
 
